@@ -22,7 +22,15 @@ AD<sub>0</sub>-AD<sub>7</sub>
 ) to reduce pin count. </li>
 <b>Address Phase:</b><li> During the first clock cycle of a machine cycle, AD<sub>0</sub>
 -AD<sub>7</sub>carry the lower-order byte of the address.</li>
-<b></b>Latch Activation:</b> <li>The ALE (Address Latch Enable) signal goes high, causing an external latch to store the lower-order address.</li>
+<b>Latch Activation:</b> <li>The ALE (Address Latch Enable) signal goes high, causing an external latch to store the lower-order address.</li>
 <b>Data Phase:</b> <li>In subsequent cycles, AD<sub>0</sub>
 -AD<sub>7</sub> act as a bidirectional data bus to transfer data.</li>
+
+<h1>Key Signal Roles</h1>
+<b>ALE (Address Latch Enable):</b> <li> Indicates that the AD<sub>0</sub>
+-AD<sub>7</sub>
+ lines hold address information.</li>
+
+<b>RD(Read):</b> <li> Signal to instruct memory or I/O device to read data.</li>
+<b>WR(Write):</b> <li> Signal to instruct memory or I/O device to accept data.</li>
 </ul>
