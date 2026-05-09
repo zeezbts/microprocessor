@@ -1,0 +1,35 @@
+<h1>Microprocessor-initiated operation:</h1>
+Microprocessor-initiated operations are the fundamental data transfer and control actions that the microprocessor (MPU) performs to interact with memory or peripheral devices, primarily including memory read/write and I/O read/write. These operations are managed through the system bus (address, data, control) and involve identification of the target, synchronization, and data transfer. 
+<ol>
+  <li>Memory Read</li>
+  <li>Memory Write</li>
+  <li>I/O Read (Input)</li>
+  <li>I/O Write (Output)</li>
+</ol>
+<h1>Key Microprocessor-Initiated Operations (8085 Example):</h1>
+<ul>
+<li>Memory Read: The MPU retrieves data or instructions from a specific memory location.</li>
+<li>Memory Write: The MPU sends data to a specific memory location for storage.</li>
+<li>I/O Read (Input): The MPU reads data from an external input device (e.g., keyboard).</li>
+<li>I/O Write (Output): The MPU sends data to an external output device (e.g., LED display).</li>
+</ul>
+
+<h1>Steps in MPU Initiated Operations:</h1>
+<ul>
+<li>Identify peripheral/memory: The MPU places the 16-bit address on the address bus to locate the device.</li>
+<li>Timing/Synchronization: The MPU sends control signals (like RD or WD ) to synchronize with the device.</li>
+<li>Data Transfer: Data is transferred via the data bus. </li>
+</ul>
+
+<h1>Distinction from Externally Initiated Operations:</h1>
+<ul>
+<li>While the above are initiated by the processor to control the system, externally initiated operations allow external devices to interrupt or manage the MPU, including: </li>
+<li>Reset: Suspends operation and clears the Program Counter.</li>
+<li>Interrupt: External signal forcing the MPU to execute a service routine.</li>
+<li>Ready: Synchronizes slow peripherals with the faster MPU.</li>
+<li>Hold: Requests control of the system bus (DMA).</li>
+</ul>
+
+
+
+<a href="busorg.html">busorg</a>

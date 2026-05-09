@@ -1,0 +1,28 @@
+<h1>Bus organization of 8085 microprocessor</h1>
+
+<h2>Introduction</h2>
+<ul>
+The 8085 microprocessor uses a 16-bit address bus, an 8-bit bidirectional data bus, and a control bus to manage data flow and peripheral communication. A key feature is the multiplexed 
+(AD<sub>0</sub>-AD<sub>7</sub>) lines, which carry lower-order address bits and data at different times, requiring an external latch (via ALE signal) to separate them </ul>
+<img src="bus org.jpg" alt="" srcset="">
+<ul>
+<h2>Core Bus Components:</h2>
+<b>Address Bus (
+A<sub>8</sub>-A<sub>15</sub> & AD<sub>0</sub>-AD<sub>7</sub>):</b>
+<li> A 16-bit, unidirectional bus (CPU to memory/IO) that can address up to 
+2<sup>16</sup>=65,536locations (64 KB).</li>
+<b>Data Bus (
+AD<sub>0</sub>-AD<sub>7</sub>
+):</b><li> An 8-bit, bidirectional bus used for transferring data between the microprocessor, memory, and I/O devices.</li>
+<b>Control Bus: </b><li>A set of signal lines that carry control signals to regulate timing and operations, including Read (RD), Write (WR), and Address Latch Enable (ALE). </li>
+
+<h2>Multiplexed Bus Organization</h2>
+<li>The 8085 uses multiplexed address/data lines (AD<sub>0</sub>
+-AD<sub>7</sub>
+) to reduce pin count. </li>
+<b>Address Phase:</b><li> During the first clock cycle of a machine cycle, AD<sub>0</sub>
+-AD<sub>7</sub>carry the lower-order byte of the address.</li>
+<b></b>Latch Activation:</b> <li>The ALE (Address Latch Enable) signal goes high, causing an external latch to store the lower-order address.</li>
+<b>Data Phase:</b> <li>In subsequent cycles, AD<sub>0</sub>
+-AD<sub>7</sub> act as a bidirectional data bus to transfer data.</li>
+</ul>
