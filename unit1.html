@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microprocessor-Initiated Operations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f9;
+            color: #333;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 20px;
+        }
+        p {
+            margin-bottom: 15px;
+        }
+        ul, ol {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        strong {
+            color: #2c3e50;
+        }
+        .code-signal {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #e0e0e0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .section-box {
+            background-color: #fff;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin-bottom: 20px;
+            border-radius: 0 4px 4px 0;
+        }
+        .external-box {
+            border-left-color: #e74c3c;
+            background-color: #fff5f5;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Microprocessor-Initiated Operations</h1>
+    
+    <p>Microprocessor-initiated operations are the fundamental data transfer and control actions that the microprocessor (MPU) performs to interact with memory or peripheral devices, primarily including memory read/write and I/O read/write. These operations are managed through the system bus (address, data, control) and involve identification of the target, synchronization, and data transfer.</p>
+
+    <h2>Primary Operations List</h2>
+    <ul>
+        <li>Memory Read</li>
+        <li>Memory Write</li>
+        <li>I/O Read (Input)</li>
+        <li>I/O Write (Output)</li>
+    </ul>
+
+    <h2>Key Microprocessor-Initiated Operations (8085 Example)</h2>
+    <div class="section-box">
+        <ul>
+            <li><strong>Memory Read:</strong> The MPU retrieves data or instructions from a specific memory location.</li>
+            <li><strong>Memory Write:</strong> The MPU sends data to a specific memory location for storage.</li>
+            <li><strong>I/O Read (Input):</strong> The MPU reads data from an external input device (e.g., keyboard).</li>
+            <li><strong>I/O Write (Output):</strong> The MPU sends data to an external output device (e.g., LED display).</li>
+        </ul>
+    </div>
+
+    <h2>Steps in MPU Initiated Operations</h2>
+    <ol>
+        <li><strong>Identify peripheral/memory:</strong> The MPU places the 16-bit address on the address bus to locate the device.</li>
+        <li><strong>Timing/Synchronization:</strong> The MPU sends control signals (like <span class="code-signal">RD</span> or <span class="code-signal">WR</span>) to synchronize with the device.</li>
+        <li><strong>Data Transfer:</strong> Data is transferred via the data bus.</li>
+    </ol>
+
+    <h2>Distinction from Externally Initiated Operations</h2>
+    <p>While the above are initiated by the processor to control the system, externally initiated operations allow external devices to interrupt or manage the MPU, including:</p>
+    
+    <div class="section-box external-box">
+        <ul>
+            <li><strong>Reset:</strong> Suspends operation and clears the Program Counter.</li>
+            <li><strong>Interrupt:</strong> External signal forcing the MPU to execute a service routine.</li>
+            <li><strong>Ready:</strong> Synchronizes slow peripherals with the faster MPU.</li>
+            <li><strong>Hold:</strong> Requests control of the system bus (DMA).</li>
+        </ul>
+    </div>
+
+<hr>
+<hr>
+
+<h1>Bus organization of 8085 microprocessor</h1>
+
+
+<h2>Introduction</h2>
+<ul>
+The 8085 microprocessor uses a 16-bit address bus, an 8-bit bidirectional data bus, and a control bus to manage data flow and peripheral communication. A key feature is the multiplexed 
+(AD<sub>0</sub>-AD<sub>7</sub>) lines, which carry lower-order address bits and data at different times, requiring an external latch (via ALE signal) to separate them </ul>
+<img src="bus org.jpg" alt="" srcset="">
+<ul>
+<h2>Core Bus Components:</h2>
+<b>Address Bus (
+A<sub>8</sub>-A<sub>15</sub> & AD<sub>0</sub>-AD<sub>7</sub>):</b>
+<li> A 16-bit, unidirectional bus (CPU to memory/IO) that can address up to 
+2<sup>16</sup>=65,536locations (64 KB).</li>
+<b>Data Bus (
+AD<sub>0</sub>-AD<sub>7</sub>
+):</b><li> An 8-bit, bidirectional bus used for transferring data between the microprocessor, memory, and I/O devices.</li>
+<b>Control Bus: </b><li>A set of signal lines that carry control signals to regulate timing and operations, including Read (RD), Write (WR), and Address Latch Enable (ALE). </li>
+
+<h2>Multiplexed Bus Organization</h2>
+<li>The 8085 uses multiplexed address/data lines (AD<sub>0</sub>
+-AD<sub>7</sub>
+) to reduce pin count. </li>
+<b>Address Phase:</b><li> During the first clock cycle of a machine cycle, AD<sub>0</sub>
+-AD<sub>7</sub>carry the lower-order byte of the address.</li>
+<b>Latch Activation:</b> <li>The ALE (Address Latch Enable) signal goes high, causing an external latch to store the lower-order address.</li>
+<b>Data Phase:</b> <li>In subsequent cycles, AD<sub>0</sub>
+-AD<sub>7</sub> act as a bidirectional data bus to transfer data.</li>
+
+<h1>Key Signal Roles</h1>
+<b>ALE (Address Latch Enable):</b> <li> Indicates that the AD<sub>0</sub>
+-AD<sub>7</sub>
+ lines hold address information.</li>
+
+<b>RD(Read):</b> <li> Signal to instruct memory or I/O device to read data.</li>
+<b>WR(Write):</b> <li> Signal to instruct memory or I/O device to accept data.</li>
+</ul>
+
+<hr>
+<hr>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8085 Microprocessor Flag Register</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+            color: #212529;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #0f4c81;
+            border-bottom: 3px solid #0f4c81;
+            padding-bottom: 10px;
+            font-size: 28px;
+        }
+        h2 {
+            color: #1d2d44;
+            font-size: 20px;
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        p {
+            margin: 12px 0;
+        }
+        .intro-box {
+            background-color: #eef1f6;
+            border-left: 5px solid #0f4c81;
+            padding: 15px;
+            border-radius: 0 4px 4px 0;
+            font-size: 15px;
+        }
+        .map-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .map-table th, .map-table td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: center;
+            font-family: monospace;
+            font-size: 16px;
+        }
+        .map-table th {
+            background-color: #f1f3f5;
+            color: #495057;
+        }
+        .map-table td {
+            background-color: #ffffff;
+            font-weight: bold;
+        }
+        .flag-active {
+            color: #d9383a;
+            background-color: #fff5f5 !important;
+        }
+        .flag-unused {
+            color: #868e96;
+            background-color: #f8f9fa !important;
+        }
+        .flag-list {
+            list-style: none;
+            padding: 0;
+        }
+        .flag-item {
+            background: #ffffff;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+        .flag-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #0f4c81;
+            margin-bottom: 6px;
+        }
+        .flag-desc {
+            margin: 0;
+            font-size: 14px;
+            color: #495057;
+        }
+        .bullet-list {
+            padding-left: 20px;
+            margin: 8px 0;
+        }
+        .bullet-list li {
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>8085 Microprocessor Flag Register</h1>
+    
+    <div class="intro-box">
+        <p>The 8085 Flag Register is a special-purpose 8-bit register containing 5 active status bits (flip-flops) and 3 unused/indeterminate bits.</p>
+        <p>The Arithmetic Logic Unit (ALU) updates these bits automatically after executing arithmetic or logical operations to reflect the characteristics of the resulting data.</p>
+    </div>
+
+    <h2>🗺️ Bit Positioning Map</h2>
+    <p>The 8 bits of the Flag register are organized in the following fixed layout configuration:</p>
+    
+    <table class="map-table">
+        <thead>
+            <tr>
+                <th>Bit Position</th>
+                <th>D7</th>
+                <th>D6</th>
+                <th>D5</th>
+                <th>D4</th>
+                <th>D3</th>
+                <th>D2</th>
+                <th>D1</th>
+                <th>D0</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Flag Name</th>
+                <td class="flag-active">S</td>
+                <td class="flag-active">Z</td>
+                <td class="flag-unused">X</td>
+                <td class="flag-active">AC</td>
+                <td class="flag-unused">X</td>
+                <td class="flag-active">P</td>
+                <td class="flag-unused">X</td>
+                <td class="flag-active">CY</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul class="bullet-list">
+        <li><strong>Active Status Flags:</strong> S (Sign), Z (Zero), AC (Auxiliary Carry), P (Parity), CY (Carry)</li>
+        <li><strong>Unused Bits (X):</strong> D5, D3, and D1 are undefined/don't-care bits.</li>
+    </ul>
+
+    <h2>⚙️ Breakdown of the 5 Status Flags</h2>
+    
+    <ul class="flag-list">
+        <li class="flag-item">
+            <div class="flag-title">Sign Flag (S - Bit 7)</div>
+            <p class="flag-desc">Set to 1 if the most significant bit (D7) of the result is 1, indicating a negative number. Reset to 0 if D7 is 0, indicating a positive number.</p>
+        </li>
+        <li class="flag-item">
+            <div class="flag-title">Zero Flag (Z - Bit 6)</div>
+            <p class="flag-desc">Set to 1 if the ALU operation results in an output value of exactly zero. Reset to 0 if the resulting output is non-zero.</p>
+        </li>
+        <li class="flag-item">
+            <div class="flag-title">Auxiliary Carry Flag (AC - Bit 4)</div>
+            <p class="flag-desc">Set to 1 if a carry out is generated from lower-nibble bit D3 to bit D4 during an addition.</p>
+        </li>
+        <li class="flag-item">
+            <div class="flag-title">Parity Flag (P - Bit 2)</div>
+            <p class="flag-desc">Set to 1 if the 8-bit result contains an even number of 1s (Even Parity). Reset to 0 if the result contains an odd number of 1s (Odd Parity).</p>
+        </li>
+        <li class="flag-item">
+            <div class="flag-title">Carry Flag (CY - Bit 0)</div>
+            <p class="flag-desc">Set to 1 if an addition generates a carry out of the most significant bit (D7), or if a subtraction requires a borrow. Reset to 0 when no carry or borrow happens.</p>
+        </li>
+    </ul>
+
+</body>
+</html>
+<hr>
+<hr>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intel 8085 Microprocessor Internal Data Operations</title>
+   
+   
+</head>
+<body>
+
+    <h1>Intel 8085 Microprocessor Internal Data Operations</h1>
+    
+    <div class="highlight-container">
+        <p>In the Intel 8085 microprocessor, internal data operations are executions that occur entirely within the chip's internal structure. They do not utilize the external system bus to read from or write to external memory or I/O devices after the instruction has been fetched.</p>
+        <p>These operations are performed at high speed by the Arithmetic Logic Unit (ALU) using the internal registers and the accumulator.</p>
+    </div>
+
+    <h2>⚙️ Core 8085 Internal Data Operations</h2>
+    <p>The 8085 MPU performs four primary classifications of internal data operations:</p>
+    
+    <ul class="op-list">
+        <li class="op-item">
+            <div class="op-name">Store 8-bit Data</div>
+            <p class="op-desc">Loading an immediate 8-bit value directly into an internal register or register pair (e.g., <span class="code-snippet">MVI B, 32H</span>).</p>
+        </li>
+        <li class="op-item">
+            <div class="op-name">Data Transfer</div>
+            <p class="op-desc">Copying data from one internal register to another (e.g., <span class="code-snippet">MOV A, B</span>). The source register contents remain unchanged.</p>
+        </li>
+        <li class="op-item">
+            <div class="op-name">Arithmetic Operations</div>
+            <p class="op-desc">Performing mathematics like addition, subtraction, increment (<span class="code-snippet">INR</span>), or decrement (<span class="code-snippet">DCR</span>) on data inside the registers.</p>
+        </li>
+        <li class="op-item">
+            <div class="op-name">Logical Operations</div>
+            <p class="op-desc">Executing bitwise computations like AND, OR, XOR, complementing (<span class="code-snippet">CMA</span>), or rotating bits (<span class="code-snippet">RLC</span>, <span class="code-snippet">RRC</span>) within the Accumulator.</p>
+        </li>
+    </ul>
+
+</body>
+</html>
+<hr>
+<hr>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>8085 Microprocessor Externally Initiated Operations</title>
+</head>
+<body>
+
+    <h1>8085 Microprocessor Externally Initiated Operations</h1>
+    
+    <p>Externally initiated operations (or peripheral-initiated operations) are actions that are not triggered by the microprocessor itself, but rather by external devices or peripherals. These devices send signals to the 8085 MPU via specific pins to interrupt its current execution, request control of the system buses, or synchronize data transfers.</p>
+    
+    <p>The Intel 8085 microprocessor supports four primary externally initiated operations.</p>
+
+    <h2>⚙️ Core 8085 Externally Initiated Operations</h2>
+    
+    <ul>
+        <li>
+            <strong>Reset:</strong> When an external signal is applied to the <code>RESET IN</code> pin, the MPU drops all current operations, clears the internal Program Counter (PC) to <code>0000H</code>, resets the interrupt enable flip-flops, and forces the system to restart initialization.
+        </li>
+        <li>
+            <strong>Interrupt:</strong> An external peripheral sends a signal via hardware interrupt pins (<code>TRAP</code>, <code>RST 7.5</code>, <code>RST 6.5</code>, <code>RST 5.5</code>, or <code>INTR</code>) to pause the MPU's current program execution. The MPU completes its current instruction, stores the PC on the stack, and branches out to execute a specific Interrupt Service Routine (ISR).
+        </li>
+        <li>
+            <strong>Ready:</strong> Slow peripheral devices or memory chips utilize the <code>READY</code> pin to communicate with the faster MPU. Dropping this line introduces "Wait States" inside the MPU machine cycles until the slower device is prepared for an accurate data transfer.
+        </li>
+        <li>
+            <strong>Hold:</strong> An external device (such as a Direct Memory Access or DMA Controller) sends a signal to the <code>HOLD</code> pin requesting complete control over the system buses. The MPU completes its current operations, places its address, data, and control lines into a high-impedance state (tri-state), and confirms the release via the <code>HLDA</code> (Hold Acknowledge) pin.
+        </li>
+    </ul>
+
+</body>
+</html>
+
+</body>
+</html>

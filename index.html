@@ -1,35 +1,158 @@
-<h1>Microprocessor-initiated operation:</h1>
-Microprocessor-initiated operations are the fundamental data transfer and control actions that the microprocessor (MPU) performs to interact with memory or peripheral devices, primarily including memory read/write and I/O read/write. These operations are managed through the system bus (address, data, control) and involve identification of the target, synchronization, and data transfer. 
-<ol>
-  <li>Memory Read</li>
-  <li>Memory Write</li>
-  <li>I/O Read (Input)</li>
-  <li>I/O Write (Output)</li>
-</ol>
-<h1>Key Microprocessor-Initiated Operations (8085 Example):</h1>
-<ul>
-<li>Memory Read: The MPU retrieves data or instructions from a specific memory location.</li>
-<li>Memory Write: The MPU sends data to a specific memory location for storage.</li>
-<li>I/O Read (Input): The MPU reads data from an external input device (e.g., keyboard).</li>
-<li>I/O Write (Output): The MPU sends data to an external output device (e.g., LED display).</li>
-</ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>html sem 1</title>
+    <style>
+      img {
+  
+  max-width: 100%;
+  height: auto; 
+  object-fit: cover; 
+  display: block; 
+  image-rendering: -webkit-optimize-contrast;
+}
+.pro-card {
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-<h1>Steps in MPU Initiated Operations:</h1>
-<ul>
-<li>Identify peripheral/memory: The MPU places the 16-bit address on the address bus to locate the device.</li>
-<li>Timing/Synchronization: The MPU sends control signals (like RD or WD ) to synchronize with the device.</li>
-<li>Data Transfer: Data is transferred via the data bus. </li>
-</ul>
+/* Hover effect used on many e-commerce sites */
+.pro-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+  .navbar {
+  overflow: hidden;
+  background-color: #333;
+}
+.navbar a {
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+.dropdown .dropbtn {
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+  cursor: pointer;
+}
+.navbar a:hover, .dropdown:hover .dropbtn {
+  background-color: red;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+    </style>
+</head>
+<body>
+  <div class="navbar">
+  <a href="home.html">HOME</a>
+  <a href="contact.html">CONTACT</a>
+  <a href="aboutus.html">ABOUTUS</a>
+  <a href="https://edu-seven-bay.vercel.app/">C++ PAGE</a>
+  <a href="https://csem1zeez.vercel.app/">C PAGE</a>
+  <A href="https://htmlsem2zeez.vercel.app/">HTML PAGE</A>
+    <div class="dropdown">
+    <button class="dropbtn">UNITS
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+      <a href="unit1.html">UNIT 1</a>
+      <a href="unit2.html">UNIT 2</a>
+      <a href="unit3.html">UNIT 3</a>
+      
+  </div> 
+</div>
+  </div>
+<br>
+<h1><I>WELCOME TO ZEEZ</I></h1>
+<img class="pro-card" src="zeez143.png" alt="unknow">
+<br><br>
+<style>
+  /* Button container and general styling */
+  .button-box {
+    margin: 20px 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+  }
 
-<h1>Distinction from Externally Initiated Operations:</h1>
-<ul>
-<li>While the above are initiated by the processor to control the system, externally initiated operations allow external devices to interrupt or manage the MPU, including: </li>
-<li>Reset: Suspends operation and clears the Program Counter.</li>
-<li>Interrupt: External signal forcing the MPU to execute a service routine.</li>
-<li>Ready: Synchronizes slow peripherals with the faster MPU.</li>
-<li>Hold: Requests control of the system bus (DMA).</li>
-</ul>
+  /* Professional Button Design */
+  .view-btn {
+    display: inline-block;
+    background-color: #007bff; /* Primary Blue */
+    color: white;
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none; /* Removes underline from <a> */
+    border-radius: 5px;
+    border: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Hover and Active effects */
+  .view-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .view-btn:active {
+    transform: translateY(0);
+  }
+
+  /* Heading styling */
+  .university-title {
+    color: #2c3e50;
+    border-left: 5px solid #007bff;
+    padding-left: 15px;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+  }
+</style>
+
+<h2 class="university-title">MICROPROCESSOR Alagappa University</h2>
+
+<div class="button-box">
+  <!-- Clean approach: Using the <a> tag styled as a button -->
+  <a href="" class="view-btn">VIEW QUESTIONS</a>
+</div>
 
 
-
-<a href="busorg.html">busorg</a>
+</body>
+</html>

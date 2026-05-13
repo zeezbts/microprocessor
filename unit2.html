@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intel 8085 Microprocessor Functional Block Diagram & Architecture</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f5f7fa;
+            color: #2c3e50;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            font-size: 28px;
+        }
+        h2 {
+            color: #2980b9;
+            font-size: 20px;
+            margin-top: 30px;
+            border-bottom: 1px solid #d6dbdf;
+            padding-bottom: 5px;
+        }
+        p {
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+        .diagram-container {
+            background-color: #1e272e;
+            color: #00d2d3;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            white-space: pre;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            margin: 20px 0;
+            font-size: 13px;
+            line-height: 1.2;
+        }
+        .group-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        @media(min-width: 768px) {
+            .group-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .group-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 15px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            border-top: 4px solid #3498db;
+        }
+        .group-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .unit-list {
+            padding-left: 20px;
+            margin: 0;
+        }
+        .unit-list li {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .unit-list strong {
+            color: #2980b9;
+        }
+        .pin-spec {
+            font-family: monospace;
+            background-color: #eaeded;
+            padding: 2px 5px;
+            border-radius: 3px;
+            color: #e67e22;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Intel 8085 Microprocessor Architecture</h1>
+    <p>The functional block diagram of the Intel 8085 microprocessor represents its internal architecture, illustrating how various functional units interact via the internal data bus to process instructions.</p>
+
+    <img src="function.jpg" alt="">
+    <h2>⚙️ Explanation of Functional Units</h2>
+    <p>The architecture of the 8085 is divided into six core functional groups:</p>
+
+    <div class="group-container">
+        <!-- Group 1 -->
+        <div class="group-card">
+            <div class="group-title">1. Register Unit</div>
+            <ul class="unit-list">
+                <li><strong>Accumulator (A):</strong> An 8-bit register that stores one of the primary operands for ALU functions and automatically caches the final calculation output.</li>
+                <li><strong>General-Purpose Registers (B, C, D, E, H, L):</strong> Six 8-bit registers that hold temporary computing data. They can combine into 16-bit register pairs (BC, DE, HL) to point to memory addresses.</li>
+                <li><strong>Program Counter (PC):</strong> A 16-bit sequencing register that continuously holds the memory address of the next instruction waiting to be fetched.</li>
+                <li><strong>Stack Pointer (SP):</strong> A 16-bit memory tracking register that points to the top location of the Stack memory structure.</li>
+            </ul>
+        </div>
+
+        <!-- Group 2 -->
+        <div class="group-card">
+            <div class="group-title">2. Arithmetic and Logic Unit (ALU)</div>
+            <ul class="unit-list">
+                <li>Performs internal execution logic including 8-bit addition, subtraction, logical AND, OR, XOR, complements, and bit-rotation patterns.</li>
+                <li>Coordinates directly with the Temporary Register (which buffers the second operand) and the Flag Register (which exposes status shifts like Carry or Zero).</li>
+            </ul>
+        </div>
+
+        <!-- Group 3 -->
+        <div class="group-card">
+            <div class="group-title">3. Instruction Register and Decoder</div>
+            <ul class="unit-list">
+                <li><strong>Instruction Register:</strong> Temporarily stores an instruction opcode immediately after it is fetched from external memory.</li>
+                <li><strong>Instruction Decoder:</strong> Decodes the buffered opcode byte to translate the machine command into binary signals, determining what action the processor must perform.</li>
+            </ul>
+        </div>
+
+        <!-- Group 4 -->
+        <div class="group-card">
+            <div class="group-title">4. Timing and Control Unit</div>
+            <ul class="unit-list">
+                <li>Acts as the brain of the MPU, generating necessary clock cycles and synchronized control pulses to dictate internal and external data movements.</li>
+                <li>Manages status and control lines such as <span class="pin-spec">RD</span> (Read), <span class="pin-spec">WR</span> (Write), <span class="pin-spec">ALE</span> (Address Latch Enable), and <span class="pin-spec">IO/M</span> (I/O or Memory selection).</li>
+            </ul>
+        </div>
+
+        <!-- Group 5 -->
+        <div class="group-card">
+            <div class="group-title">5. Interrupt Control Block</div>
+            <ul class="unit-list">
+                <li>Asynchronously monitors external device signals trying to pause the MPU loop via physical hardware pins.</li>
+                <li>Filters requests based on priority rankings: <span class="pin-spec">TRAP</span> (highest/non-maskable), <span class="pin-spec">RST 7.5</span>, <span class="pin-spec">RST 6.5</span>, <span class="pin-spec">RST 5.5</span>, and <span class="pin-spec">INTR</span> (lowest).</li>
+            </ul>
+        </div>
+
+        <!-- Group 6 -->
+        <div class="group-card">
+            <div class="group-title">6. Serial I/O Control</div>
+            <ul class="unit-list">
+                <li>Translates data between parallel internal operations and external single-bit peripheral lines.</li>
+                <li>Employs two pins: <span class="pin-spec">SID</span> (Serial Input Data) to read incoming bits and <span class="pin-spec">SOD</span> (Serial Output Data) to send outgoing bits.</li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>
+<hr>
+<hr>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Intel 8085 Pin Out and Signal Operations Reference</title>
+</head>
+<body>
+
+    <h1>Intel 8085 Microprocessor Pin Layout and Signal Reference</h1>
+    <p>The Intel 8085 is a 40-pin Integrated Circuit requiring a single +5V power supply. It contains multiplexed data architectures and specialized system buses to interact with external hardware environments.</p>
+
+    <h2>🗺️ Text Pin Configuration Schematic</h2>
+    <pre style="background-color: #2c3e50; color: #ecf0f1; padding: 15px; font-family: monospace; border-radius: 4px; overflow-x: auto;">
+                    +--\/--+
+        X1       1  |      |  40  Vcc (+5V)
+        X2       2  |      |  39  HOLD
+      RESET OUT  3  |      |  38  HLDA
+        SOD      4  |      |  37  CLK (OUT)
+        SID      5  |      |  36  RESET IN
+       TRAP      6  |      |  35  READY
+      RST 7.5    7  |  8085|  34  IO/M
+      RST 6.5    8  |  MPU |  33  S1
+      RST 5.5    9  |      |  32  RD
+       INTR     10  |      |  31  WR
+       INTA     11  |      |  30  ALE
+        AD0     12  |      |  29  S0
+        AD1     13  |      |  28  A15
+        AD2     14  |      |  26  A13
+        AD3     15  |      |  26  A13
+        AD4     16  |      |  25  A12
+        AD5     17  |      |  24  A11
+        AD6     18  |      |  23  A10
+        AD7     19  |      |  22  A9
+        Vss(GND)20  |      |  21  A8
+                    +------+
+    </pre>
+
+    <h2>⚙️ Signal Group Functions</h2>
+    
+    <ul>
+        <li>
+            <strong>Address Bus (A8 – A15):</strong> Pins 21 through 28. These unidirectional, active-high outputs drive the upper 8 bits of the memory or I/O address frame.
+        </li>
+        <li>
+            <strong>Multiplexed Address/Data Bus (AD0 – AD7):</strong> Pins 12 through 19. Bidirectional paths that save hardware pin counts. They host address signals during time slot T1 and flip to transfer data bytes during slots T2 and T3.
+        </li>
+        <li>
+            <strong>Control and Status Lines:</strong>
+            <ul>
+                <li><code>ALE</code> (Pin 30): Address Latch Enable signals when the multiplexed bus contains a valid low address byte.</li>
+                <li><code>RD</code> and <code>WR</code> (Pins 32, 31): Active-low controls that drive read or write data bus cycles.</li>
+                <li><code>IO/M</code> (Pin 34): Status flag distinguishing between memory cycles (Low) and peripheral device access (High).</li>
+            </ul>
+        </li>
+        <li>
+            <strong>Interrupt Systems:</strong> Hardware inputs (<code>TRAP</code>, <code>RST 7.5</code>, <code>RST 6.5</code>, <code>RST 5.5</code>, and <code>INTR</code>) that force the processor loop to execute Subroutine vectors based on strict priority protocols.
+        </li>
+        <li>
+            <strong>Serial Communications Port:</strong> Input pins (<code>SID</code>) and output latches (<code>SOD</code>) allowing single-bit processing operations managed by software instructions.
+        </li>
+    </ul>
+
+</body>
+</html>
+<hr><hr>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>8085 Microprocessor Instruction Set Cheat-Sheet Table</title>
+</head>
+<body>
+
+    <h1>8085 Microprocessor Instruction Set Cheat-Sheet Table</h1>
+    
+    <p>This comprehensive quick-reference table groups the primary instructions of the Intel 8085 microprocessor by operational category, detailing syntax, machine effects, and flag interactions.</p>
+
+    <table border="1" cellpadding="8" cellspacing="0" style="width:100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 14px; text-align: left;">
+        <thead>
+            <tr style="background-color: #2c3e50; color: #ffffff;">
+                <th style="width: 20%;">Instruction Category</th>
+                <th style="width: 15%;">Opcode &amp; Operand</th>
+                <th style="width: 25%;">Example Syntax</th>
+                <th style="width: 25%;">Operational Mechanics Summary</th>
+                <th style="width: 15%;">Flag Status Effect</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data Transfer Section -->
+            <tr style="background-color: #f9f9f9;">
+                <td rowspan="5" style="font-weight: bold; background-color: #eaedd1;">Data Transfer Group</td>
+                <td><code>MOV Rd, Rs</code></td>
+                <td><code>MOV A, B</code></td>
+                <td>Copies data from source register Rs to destination register Rd.</td>
+                <td rowspan="5" style="color: #7f8c8d; font-style: italic;">No Flags Affected</td>
+            </tr>
+            <tr style="background-color: #f9f9f9;">
+                <td><code>MVI R, Data</code></td>
+                <td><code>MVI C, 32H</code></td>
+                <td>Loads immediate 8-bit data directly into destination register R.</td>
+            </tr>
+            <tr style="background-color: #f9f9f9;">
+                <td><code>LXI Rp, Data16</code></td>
+                <td><code>LXI H, 2050H</code></td>
+                <td>Loads immediate 16-bit value into a register pair (BC, DE, HL, SP).</td>
+            </tr>
+            <tr style="background-color: #f9f9f9;">
+                <td><code>LDA / STA</code></td>
+                <td><code>LDA 3000H</code> / <code>STA 4000H</code></td>
+                <td>Loads from or stores Accumulator direct to a 16-bit memory address.</td>
+            </tr>
+            <tr style="background-color: #f9f9f9;">
+                <td><code>XCHG</code></td>
+                <td><code>XCHG</code></td>
+                <td>Exchanges the 16-bit data contents of HL pair with DE pair instantly.</td>
+            </tr>
+
+            <!-- Arithmetic Section -->
+            <tr>
+                <td rowspan="4" style="font-weight: bold; background-color: #d1ead1;">Arithmetic Group</td>
+                <td><code>ADD / SUB</code></td>
+                <td><code>ADD B</code> / <code>SUB M</code></td>
+                <td>Adds or subtracts register/memory to/from Accumulator content.</td>
+                <td style="color: #27ae60; font-weight: bold;">All Flags Modified</td>
+            </tr>
+            <tr>
+                <td><code>ADI / SUI</code></td>
+                <td><code>ADI 05H</code> / <code>SUI 12H</code></td>
+                <td>Adds or subtracts immediate 8-bit data to/from Accumulator.</td>
+                <td style="color: #27ae60; font-weight: bold;">All Flags Modified</td>
+            </tr>
+            <tr>
+                <td><code>INR / DCR</code></td>
+                <td><code>INR H</code> / <code>DCR C</code></td>
+                <td>Increments or decrements a specified 8-bit register or memory by 1.</td>
+                <td style="color: #e67e22; font-weight: bold;">All except CY Flag</td>
+            </tr>
+            <tr>
+                <td><code>INX / DCX</code></td>
+                <td><code>INX D</code> / <code>DCX H</code></td>
+                <td>Increments or decrements a 16-bit register pair by 1.</td>
+                <td style="color: #7f8c8d; font-style: italic;">No Flags Affected</td>
+            </tr>
+
+            <!-- Logical Section -->
+            <tr style="background-color: #f9f9f9;">
+                <td rowspan="5" style="font-weight: bold; background-color: #d1e0ea;">Logical Group</td>
+                <td><code>ANA / ANI</code></td>
+                <td><code>ANA D</code> / <code>ANI F0H</code></td>
+                <td>Performs bitwise AND with Accumulator content.</td>
+                <td style="color: #2980b9; font-weight: bold;">AC=1, CY=0 Modified</td>
+            </tr>
+            <tr style="background-color: #f9f9f9;">
+                <td><code>ORA / XRA</code></td>
+                <td><code>ORA E</code> / <code>XRA A</code></td>
+                <td>Performs bitwise inclusive OR or Exclusive OR with Accumulator.</td>
+                <td style="color: #2980b9; font-weight: bold;">AC=0, CY=0 Modified</td>
+            </tr>
+            <tr style="background-color: #f9f9f9;">
+                <td><code>CMP / CPI</code></td>
+                <td><code>CMP B</code> / <code>CPI 45H</code></td>
+                <td>Compares register/memory/immediate with Accumulator via subtraction.</td>
+                <td style="color: #27ae60; font-weight: bold;">All Flags Modified</td>
+            </tr>
+            <tr style="background-color: #f9f9f9;">
+                <td><code>CMA</code></td>
+                <td><code>CMA</code></td>
+                <td>Inverts all individual data bits inside Accumulator (1's complement).</td>
+                <td style="color: #7f8c8d; font-style: italic;">No Flags Affected</td>
+            </tr>
+            <tr style="background-color: #f9f9f9;">
+                <td><code>RLC / RRC</code></td>
+                <td><code>RLC</code> / <code>RRC</code></td>
+                <td>Rotates the 8 bits of the Accumulator left or right by one bit space.</td>
+                <td style="color: #e74c3c; font-weight: bold;">Only CY Flag Modified</td>
+            </tr>
+
+            <!-- Branch Control Section -->
+            <tr>
+                <td rowspan="3" style="font-weight: bold; background-color: #ead1ea;">Branch Control Group</td>
+                <td><code>JMP / JC / JNZ</code></td>
+                <td><code>JMP 2000H</code> / <code>JZ 2400H</code></td>
+                <td>Unconditional or conditional jump to a specified address based on flags.</td>
+                <td rowspan="3" style="color: #7f8c8d; font-style: italic;">No Flags Affected</td>
+            </tr>
+            <tr>
+                <td><code>CALL / CC / CNZ</code></td>
+                <td><code>CALL 3000H</code> / <code>CNC 3500H</code></td>
+                <td>Pushes PC to stack and jumps to unconditional or conditional subroutine.</td>
+            </tr>
+            <tr>
+                <td><code>RET / RC / RNZ</code></td>
+                <td><code>RET</code> / <code>RZ</code></td>
+                <td>Pops address off stack to return to main program sequence dynamically.</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
