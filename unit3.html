@@ -1,0 +1,536 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8085 Microprocessor: SIM and RIM Instructions</title>
+    <script src="jsdelivr.net"></script>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans p-6 max-w-4xl mx-auto">
+<strong>
+    <header class="mb-8 border-b pb-4">
+        <h1 class="text-3xl font-bold text-blue-800">8085 Microprocessor Architecture</h1>
+        <p class="text-gray-600 mt-2">SIM and RIM Instructions Overview</p>
+         <style>
+            img{
+                max-width: 100%;
+                height: auto;
+            }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+            color: #212529;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #0f4c81;
+            border-bottom: 3px solid #0f4c81;
+            padding-bottom: 10px;
+            font-size: 28px;
+        }
+        h2 {
+            color: #1d2d44;
+            font-size: 20px;
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        p {
+            margin: 12px 0;
+        }
+        .intro-box {
+            background-color: #eef1f6;
+            border-left: 5px solid #0f4c81;
+            padding: 15px;
+            border-radius: 0 4px 4px 0;
+            font-size: 15px;
+        }
+        .map-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .map-table th, .map-table td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: center;
+            font-family: monospace;
+            font-size: 16px;
+        }
+        .map-table th {
+            background-color: #f1f3f5;
+            color: #495057;
+        }
+        .map-table td {
+            background-color: #ffffff;
+            font-weight: bold;
+        }
+        .flag-active {
+            color: #d9383a;
+            background-color: #fff5f5 !important;
+        }
+        .flag-unused {
+            color: #868e96;
+            background-color: #f8f9fa !important;
+        }
+        .flag-list {
+            list-style: none;
+            padding: 0;
+        }
+        .flag-item {
+            background: #ffffff;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+        .flag-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #0f4c81;
+            margin-bottom: 6px;
+        }
+        .flag-desc {
+            margin: 0;
+            font-size: 14px;
+            color: #495057;
+        }
+        .bullet-list {
+            padding-left: 20px;
+            margin: 8px 0;
+        }
+        .bullet-list li {
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+    </style>
+    </header>
+
+    <main class="space-y-8">
+        <!-- Introduction Section -->
+        <section class="bg-white p-6 rounded-lg shadow-sm border">
+            <p class="leading-relaxed">
+                In the 8085 microprocessor, <strong>SIM (Set Interrupt Mask)</strong> and <strong>RIM (Read Interrupt Mask)</strong> are 1-byte, multi-purpose instructions used primarily for <strong>interrupt control</strong> and <strong>serial communication</strong>. Both instructions interact directly with the <strong>Accumulator (Register A)</strong> to send or receive control bits.
+            </p>
+        </section>
+
+        <!-- SIM Instruction Section -->
+        <section class="bg-white p-6 rounded-lg shadow-sm border">
+            <h2 class="text-2xl font-semibold text-blue-700 mb-2">SIM: Set Interrupt Mask (Opcode: 30H)</h2>
+            <p class="text-gray-700 mb-4">
+                The SIM instruction is used to enable/disable (mask) hardware interrupts (RST 5.5, 6.5, 7.5) and to output serial data. You must load the desired bit pattern into the accumulator <strong>before</strong> executing SIM.
+            </p>
+            <body class="bg-slate-900 text-slate-100 font-sans p-6 max-w-4xl mx-auto">
+
+    <main class="space-y-8">
+        <!-- SIM Diagram Block -->
+        <section class="bg-slate-950 rounded-lg shadow-2xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-800 px-4 py-2 flex items-center justify-between border-b border-slate-700">
+                <span class="text-sm font-mono text-sky-400 font-bold">SIM Register Structure (Accumulator Bit Mapping)</span>
+                <span class="text-xs text-slate-500 font-mono">OPCODE: 30H</span>
+            </div>
+            <div class="p-4 overflow-x-auto">
+                <pre class="font-mono text-xs sm:text-sm text-emerald-400 leading-relaxed">
+       ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
+Bit:   │ D7  │ D6  │ D5  │ D4  │ D3  │ D2  │ D1  │ D0  │
+       ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤
+Name:  │ SOD │ SDE │  X  │R7.5 │ MSE │M7.5 │M6.5 │M5.5 │
+       └──┬──┴──┬──┴─────┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┘
+          │     │           │     │     │     │     └─► 1 = Mask RST 5.5
+          │     │           │     │     │     └───────► 1 = Mask RST 6.5
+          │     │           │     │     └─────────────► 1 = Mask RST 7.5
+          │     │           │     └───────────────────► 1 = Enable Mask Bits (D0-D2)
+          │     │           └─────────────────────────► 1 = Reset RST 7.5 Flip-Flop
+          │     └─────────────────────────────────────► 1 = Enable Serial Output (SOD)
+          └───────────────────────────────────────────► Data bit to send out via SOD pin</pre>
+            </div>
+        </section>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-gray-100 border-b">
+                            <th class="p-3 font-semibold text-sm text-gray-700">Bit</th>
+                            <th class="p-3 font-semibold text-sm text-gray-700">Name</th>
+                            <th class="p-3 font-semibold text-sm text-gray-700">Function</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y text-sm">
+                        <tr><td class="p-3 font-medium">D7</td><td class="p-3 text-blue-600 font-mono">SOD</td><td class="p-3"><strong>Serial Output Data:</strong> The bit to be sent out via the SOD pin.</td></tr>
+                        <tr><td class="p-3 font-medium">D6</td><td class="p-3 text-blue-600 font-mono">SDE</td><td class="p-3"><strong>Serial Data Enable:</strong> Must be 1 to enable SOD (D7).</td></tr>
+                        <tr><td class="p-3 font-medium">D5</td><td class="p-3 text-gray-400 font-mono">X</td><td class="p-3 text-gray-400">Don't care bit.</td></tr>
+                        <tr><td class="p-3 font-medium">D4</td><td class="p-3 text-blue-600 font-mono">R7.5</td><td class="p-3"><strong>Reset RST 7.5:</strong> Setting this to 1 resets the RST 7.5 flip-flop.</td></tr>
+                        <tr><td class="p-3 font-medium">D3</td><td class="p-3 text-blue-600 font-mono">MSE</td><td class="p-3"><strong>Mask Set Enable:</strong> Must be 1 to update interrupt masks (D2-D0).</td></tr>
+                        <tr><td class="p-3 font-medium">D2</td><td class="p-3 text-blue-600 font-mono">M7.5</td><td class="p-3"><strong>Mask RST 7.5:</strong> 1 = Masked (Disabled), 0 = Available.</td></tr>
+                        <tr><td class="p-3 font-medium">D1</td><td class="p-3 text-blue-600 font-mono">M6.5</td><td class="p-3"><strong>Mask RST 6.5:</strong> 1 = Masked (Disabled), 0 = Available.</td></tr>
+                        <tr><td class="p-3 font-medium">D0</td><td class="p-3 text-blue-600 font-mono">M5.5</td><td class="p-3"><strong>Mask RST 5.5:</strong> 1 = Masked (Disabled), 0 = Available.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- RIM Instruction Section -->
+        <section class="bg-white p-6 rounded-lg shadow-sm border">
+            <h2 class="text-2xl font-semibold text-blue-700 mb-2">RIM: Read Interrupt Mask (Opcode: 20H)</h2>
+            <p class="text-gray-700 mb-4">
+                The RIM instruction is used to check the current status of the interrupt system and read incoming serial data. Executing RIM loads a status byte <strong>into</strong> the accumulator for the programmer to read.
+            </p>
+             <!-- RIM Diagram Block -->
+        <section class="bg-slate-950 rounded-lg shadow-2xl border border-slate-800 overflow-hidden">
+            <div class="bg-slate-800 px-4 py-2 flex items-center justify-between border-b border-slate-700">
+                <span class="text-sm font-mono text-amber-400 font-bold">RIM Register Structure (Accumulator Bit Mapping)</span>
+                <span class="text-xs text-slate-500 font-mono">OPCODE: 20H</span>
+            </div>
+            <div class="p-4 overflow-x-auto">
+                <pre class="font-mono text-xs sm:text-sm text-emerald-400 leading-relaxed">
+       ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐
+Bit:   │ D7  │ D6  │ D5  │ D4  │ D3  │ D2  │ D1  │ D0  │
+       ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤
+Name:  │ SID │I7.5 │I6.5 │I5.5 │ IE  │M7.5 │M6.5 │M5.5 │
+       └──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┘
+          │     │     │     │     │     │     │     └─► 1 = RST 5.5 is Masked
+          │     │     │     │     │     │     └───────► 1 = RST 6.5 is Masked
+          │     │     │     │     │     └─────────────► 1 = RST 7.5 is Masked
+          │     │     │     │     └───────────────────► 1 = Interrupts Globally Enabled
+          │     │     │     └─────────────────────────► 1 = RST 5.5 Request Pending
+          │     │     └───────────────────────────────► 1 = RST 6.5 Request Pending
+          │     └─────────────────────────────────────► 1 = RST 7.5 Request Pending
+          └───────────────────────────────────────────► Serial Input Data from SID pin</pre>
+            </div>
+        </section>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-gray-100 border-b">
+                            <th class="p-3 font-semibold text-sm text-gray-700">Bit</th>
+                            <th class="p-3 font-semibold text-sm text-gray-700">Name</th>
+                            <th class="p-3 font-semibold text-sm text-gray-700">Function</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y text-sm">
+                        <tr><td class="p-3 font-medium">D7</td><td class="p-3 text-emerald-600 font-mono">SID</td><td class="p-3"><strong>Serial Input Data:</strong> Reads the status of the SID pin.</td></tr>
+                        <tr><td class="p-3 font-medium">D6</td><td class="p-3 text-emerald-600 font-mono">I7.5</td><td class="p-3"><strong>Pending RST 7.5:</strong> 1 if an interrupt request is waiting.</td></tr>
+                        <tr><td class="p-3 font-medium">D5</td><td class="p-3 text-emerald-600 font-mono">I6.5</td><td class="p-3"><strong>Pending RST 6.5:</strong> 1 if an interrupt request is waiting.</td></tr>
+                        <tr><td class="p-3 font-medium">D4</td><td class="p-3 text-emerald-600 font-mono">I5.5</td><td class="p-3"><strong>Pending RST 5.5:</strong> 1 if an interrupt request is waiting.</td></tr>
+                        <tr><td class="p-3 font-medium">D3</td><td class="p-3 text-emerald-600 font-mono">IE</td><td class="p-3"><strong>Interrupt Enable Status:</strong> 1 if interrupts are globally enabled (via <code>EI</code>).</td></tr>
+                        <tr><td class="p-3 font-medium">D2</td><td class="p-3 text-emerald-600 font-mono">M7.5</td><td class="p-3"><strong>Current Mask RST 7.5:</strong> Reads 1 if the interrupt is currently masked.</td></tr>
+                        <tr><td class="p-3 font-medium">D1</td><td class="p-3 text-emerald-600 font-mono">M6.5</td><td class="p-3"><strong>Current Mask RST 6.5:</strong> Reads 1 if the interrupt is currently masked.</td></tr>
+                        <tr><td class="p-3 font-medium">D0</td><td class="p-3 text-emerald-600 font-mono">M5.5</td><td class="p-3"><strong>Current Mask RST 5.5:</strong> Reads 1 if the interrupt is currently masked.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Key Differences Section -->
+        <section class="bg-white p-6 rounded-lg shadow-sm border">
+            <h2 class="text-2xl font-semibold text-blue-700 mb-4">Key Differences</h2>
+            <ul class="space-y-3 list-disc list-inside text-gray-700">
+                <li><strong>Direction:</strong> SIM sends data from the accumulator to control registers; RIM reads from the registers into the accumulator.</li>
+                <li><strong>Control vs. Monitoring:</strong> SIM is used to <strong>change</strong> settings (like masking an interrupt), while RIM is used to <strong>check</strong> settings (like seeing if an interrupt is pending).</li>
+                <li><strong>Serial Port:</strong> SIM uses the <strong>SOD</strong> (Serial Output Data) pin; RIM uses the <strong>SID</strong> (Serial Input Data) pin.</li>
+            </ul>
+        </section>
+    </main>
+
+</body>
+</html>
+<hr>
+<hr><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8085 Microprocessor Interrupt Architecture</title>
+    <script src="jsdelivr.net"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans p-6 max-w-5xl mx-auto">
+
+    <!-- Header -->
+    <header class="mb-8 border-b border-slate-700 pb-4">
+        <h1 class="text-3xl font-bold text-sky-400">8085 Interrupt System</h1>
+    </header>
+
+    <main class="space-y-8">
+        <!-- Definition Section -->
+        <section class="bg-slate-950 p-6 rounded-lg border border-slate-800 shadow-xl">
+            <p class="text-base leading-relaxed text-slate-300">
+                An <strong class="text-sky-400">interrupt</strong> in the 8085 microprocessor is an asynchronous signal initiated by an external peripheral or an internal instruction that <strong class="text-amber-400">temporarily suspends the main program execution</strong> and redirects the core processor to an <strong class="text-sky-400">Interrupt Service Routine (ISR)</strong>.
+            </p>
+        </section>
+
+        <!-- Hardware Interrupt Spectrum Table -->
+        <section class="bg-slate-950 rounded-lg border border-slate-800 shadow-xl overflow-hidden">
+            <div class="bg-slate-800 px-6 py-4 border-b border-slate-700">
+                <h2 class="text-xl font-semibold text-emerald-400">8085 Hardware Interrupt Spectrum</h2>
+                <p class="text-xs text-slate-400 mt-1">Fixed hardware priority structures and signal-triggering parameters</p>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse min-w-[600px]">
+                    <thead>
+                        <tr class="bg-slate-900/50 border-b border-slate-800 text-slate-400 text-xs uppercase font-mono tracking-wider">
+                            <th class="p-4">Hardware Pin</th>
+                            <th class="p-4">Priority</th>
+                            <th class="p-4">Triggering Method</th>
+                            <th class="p-4">Vector Type</th>
+                            <th class="p-4">Vector Address</th>
+                            <th class="p-4">Maskable Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800/60 text-sm font-mono text-slate-300">
+                        <tr class="hover:bg-slate-900/40">
+                            <td class="p-4 font-bold text-amber-400">TRAP (RST 4.5)</td>
+                            <td class="p-4">1 (Highest)</td>
+                            <td class="p-4 text-slate-400">Edge &amp; Level Sensitive</td>
+                            <td class="p-4 text-sky-400">Vectored</td>
+                            <td class="p-4 text-emerald-400">0024H</td>
+                            <td class="p-4 text-rose-400 font-bold">Non-Maskable</td>
+                        </tr>
+                        <tr class="hover:bg-slate-900/40">
+                            <td class="p-4 font-bold text-slate-200">RST 7.5</td>
+                            <td class="p-4">2</td>
+                            <td class="p-4 text-slate-400">Rising-Edge Sensitive</td>
+                            <td class="p-4 text-sky-400">Vectored</td>
+                            <td class="p-4 text-emerald-400">003CH</td>
+                            <td class="p-4 text-teal-400">Maskable (via SIM)</td>
+                        </tr>
+                        <tr class="hover:bg-slate-900/40">
+                            <td class="p-4 font-bold text-slate-200">RST 6.5</td>
+                            <td class="p-4">3</td>
+                            <td class="p-4 text-slate-400">Level Sensitive</td>
+                            <td class="p-4 text-sky-400">Vectored</td>
+                            <td class="p-4 text-emerald-400">0034H</td>
+                            <td class="p-4 text-teal-400">Maskable (via SIM)</td>
+                        </tr>
+                        <tr class="hover:bg-slate-900/40">
+                            <td class="p-4 font-bold text-slate-200">RST 5.5</td>
+                            <td class="p-4">4</td>
+                            <td class="p-4 text-slate-400">Level Sensitive</td>
+                            <td class="p-4 text-sky-400">Vectored</td>
+                            <td class="p-4 text-emerald-400">002CH</td>
+                            <td class="p-4 text-teal-400">Maskable (via SIM)</td>
+                        </tr>
+                        <tr class="hover:bg-slate-900/40">
+                            <td class="p-4 font-bold text-slate-400">INTR</td>
+                            <td class="p-4">5 (Lowest)</td>
+                            <td class="p-4 text-slate-400">Level Sensitive</td>
+                            <td class="p-4 text-indigo-400">Non-Vectored</td>
+                            <td class="p-4 text-slate-500 italic">Determined by Caller</td>
+                            <td class="p-4 text-teal-400">Maskable (via DI/EI)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Structural Classifications Grid -->
+        <section class="grid md:grid-cols-2 gap-6">
+            <!-- Vectored vs Non-Vectored -->
+            <div class="bg-slate-950 p-6 rounded-lg border border-slate-800 shadow-xl space-y-4">
+                <h3 class="text-xl font-semibold text-sky-400 border-b border-slate-800 pb-2">Vectored vs. Non-Vectored</h3>
+                <div class="space-y-3">
+                    <p class="text-sm text-slate-300">
+                        <strong class="text-slate-100">Vectored Interrupts:</strong> Automatically force the Program Counter (PC) to branch to a predefined, fixed memory vector destination address.
+                    </p>
+                    <p class="text-sm text-slate-300">
+                        <strong class="text-slate-100">Non-Vectored Interrupts:</strong> The microprocessor does not provide a fixed address. The peripheral hardware must monitor the <code class="bg-slate-900 px-1.5 py-0.5 rounded text-amber-400 font-mono text-xs">INTA</code> (Interrupt Acknowledge) cycle and place a valid branching instruction (typically <code class="bg-slate-900 px-1.5 py-0.5 rounded text-emerald-400 font-mono text-xs">RST 0 – RST 7</code> or a 3-byte <code class="bg-slate-900 px-1.5 py-0.5 rounded text-emerald-400 font-mono text-xs">CALL</code>) onto the data bus.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Maskable vs Non-Maskable -->
+            <div class="bg-slate-950 p-6 rounded-lg border border-slate-800 shadow-xl space-y-4">
+                <h3 class="text-xl font-semibold text-sky-400 border-b border-slate-800 pb-2">Maskable vs. Non-Maskable</h3>
+                <div class="space-y-3">
+                    <p class="text-sm text-slate-300">
+                        <strong class="text-slate-100">Maskable:</strong> Can be blocked, disabled, or ignored by executing software flags such as <code class="bg-slate-900 px-1.5 py-0.5 rounded text-rose-400 font-mono text-xs">DI</code> (Disable Interrupt) or configuring specific register configurations using the <code class="bg-slate-900 px-1.5 py-0.5 rounded text-teal-400 font-mono text-xs">SIM</code> instruction.
+                    </p>
+                    <p class="text-sm text-slate-300">
+                        <strong class="text-slate-100">Non-Maskable:</strong> Cannot be suppressed by any software instruction. <strong class="text-amber-400">TRAP</strong> is the sole non-maskable hardware pin. It bypasses all software locks for critical exceptions like catastrophic system power failure routines.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>
+<hr><hr>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8259 PIC Internal Architecture</title>
+    <script src="jsdelivr.net"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans p-6 max-w-4xl mx-auto">
+
+    <!-- Header -->
+    <header class="mb-8 border-b border-slate-700 pb-4">
+        <h1 class="text-3xl font-bold text-sky-400">8259 Programmable Interrupt Controller</h1>
+        <p class="text-slate-400 mt-2">Internal Architecture &amp; Register Bit Configurations</p>
+    </header>
+
+    <main class="space-y-8">
+        <!-- Overview Card -->
+        <section class="bg-slate-950 p-6 rounded-xl border border-slate-800 shadow-xl">
+            <p class="text-slate-300 leading-relaxed">
+                The <strong class="text-sky-400">Intel 8259 Programmable Interrupt Controller (PIC)</strong> is a hardware support chip designed to expand the interrupt capabilities of microprocessors like the 8085 and 8086. It manages up to 8 vectored hardware interrupts, routes them via a single interrupt pin (<code class="bg-slate-900 px-1 py-0.5 rounded text-amber-400 font-mono text-xs">INTR</code>), handles vector addresses, and implements configurable priority modes.
+            </p>
+        </section>
+<img src="unit3.png" alt="">
+        
+        
+        <!-- Core Registers Breakdown -->
+        <section class="bg-slate-950 rounded-xl border border-slate-800 shadow-xl overflow-hidden">
+            <div class="bg-slate-800 px-6 py-4 border-b border-slate-700">
+                <h2 class="text-lg font-semibold text-sky-400">Register Bit-Field Assignments</h2>
+            </div>
+            <div class="p-6 space-y-4">
+                <div class="flex items-start space-x-4 border-b border-slate-800/60 pb-4">
+                    
+                    <div>
+                        <h3 class="text-sm font-bold font-mono text-slate-200">Interrupt Request Register</h3>
+                        <p class="text-xs sm:text-sm text-slate-400 mt-1">Stores all the external interrupt request levels (IR₀ to IR₇) waiting to be serviced by the microprocessor.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start space-x-4 border-b border-slate-800/60 pb-4">
+                    
+                    <div>
+                        <h3 class="text-sm font-bold font-mono text-slate-200">Interrupt Mask Register</h3>
+                        <p class="text-xs sm:text-sm text-slate-400 mt-1">An 8-bit programmable register used to mask (disable) or unmask individual interrupt channels dynamically using program configurations.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start space-x-4">
+                    
+                    <div>
+                        <h3 class="text-sm font-bold font-mono text-slate-200">In-Service Register</h3>
+                        <p class="text-xs sm:text-sm text-slate-400 mt-1">Tracks which specific interrupt levels have been accepted and are currently being executed by the microprocessor's Interrupt Service Routine (ISR).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>8259A Core Operations and Handshake Sequence</title>
+</head>
+<body>
+
+    <header>
+        <h1>8259A Programmable Interrupt Controller Operations</h1>
+        <p>A functional breakdown of priority resolution, End-Of-Interrupt mechanics, and CPU handshake sequences.</p>
+    </header>
+
+    <main>
+        <!-- Handshake Sequence Section -->
+        <section>
+            <h2>The Core 7-Step Interrupt Handshake Sequence</h2>
+            <p>When external peripheral hardware interfaces assert an interrupt request, the 8259A and the system CPU coordinate execution using the following chronological stages:</p>
+            
+            <ol>
+                <li>
+                    <strong>Request Assertion:</strong> 
+                    One or more external lines (IR0 through IR7) are pulled high by peripheral hardware modules.
+                </li>
+                <li>
+                    <strong>Registration:</strong> 
+                    The 8259A registers and locks these active physical requests into its internal Interrupt Request Register (IRR).
+                </li>
+                <li>
+                    <strong>Priority Evaluation:</strong> 
+                    The internal Priority Resolver evaluates the logged bits against active masks stored in the Interrupt Mask Register (IMR) to determine the highest priority unmasked request.
+                </li>
+                <li>
+                    <strong>CPU Signaling:</strong> 
+                    The 8259A drives its physical INTR output pin high to notify the microprocessor.
+                </li>
+                <li>
+                    <strong>Acknowledge Loop:</strong> 
+                    The CPU completes its active instruction cycle and responds by executing an active-low /INTA (Interrupt Acknowledge) pulse back to the 8259A.
+                </li>
+                <li>
+                    <strong>State Shift:</strong> 
+                    Upon receiving the /INTA pulse edge, the 8259A sets the corresponding tracking bit inside the In-Service Register (ISR) and clears the respective request bit from the IRR.
+                </li>
+                <li>
+                    <strong>Vector Delivery:</strong>
+                    <ul>
+                        <li><strong>8085 Microprocessor Mode:</strong> The CPU fires two subsequent /INTA pulses. The 8259A responds by broadcasting a 3-byte CALL instruction opcode (CDH) alongside the 16-bit target ISR memory address over the data bus lines.</li>
+                        <li><strong>8086 Microprocessor Mode:</strong> The CPU fires one single secondary /INTA pulse. The 8259A reacts by placing an 8-bit interrupt type index vector directly onto the data bus channel.</li>
+                    </ul>
+                </li>
+            </ol>
+        </section>
+
+            
+    </main>
+
+</body>
+</html>
+<hr>
+<hr>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Direct Memory Access (DMA) and Intel 8257 Specification</title>
+</head>
+<body>
+
+    <header>
+        <h1>Direct Memory Access (DMA)</h1>
+        <p>A data transfer technique that allows peripheral devices to transfer data directly to or from the system memory without continuous intervention from the CPU. This bypasses the CPU completely during data transfers, significantly increasing system speed and efficiency.</p>
+    </header>
+<img src="dma.webp" alt="">
+    <main>
+        <!-- Section: The DMA Operational Concept -->
+        <section>
+            <h2>The DMA Operational Concept</h2>
+            <p>During normal operation, the CPU acts as the data transfer intermediary. This process consumes multiple clock cycles. Under a DMA configuration, control over the system buses shifts dynamically through the following stages:</p>
+            
+            <ul>
+                <li><strong>Request:</strong> The peripheral device requests a DMA transfer by pulling the controller's request line high.</li>
+                <li><strong>Hold:</strong> The DMA controller sends a HOLD request signal to the CPU.</li>
+                <li><strong>Acknowledge:</strong> The CPU completes its current instruction, puts its data, address, and control buses into a high-impedance state (floating), and returns a HLDA (Hold Acknowledge) signal to the DMA controller.</li>
+                <li><strong>Transfer:</strong> The DMA controller takes control of the system buses and manages the high-speed data transfer directly between the memory and the peripheral.</li>
+                <li><strong>Release:</strong> Once the transfer is complete, the DMA controller drops the HOLD line, returning bus control back to the CPU.</li>
+            </ul>
+        </section>
+
+        <!-- Section: The Intel 8257 Controller -->
+        <section>
+            <h2>The Intel 8257 Programmable DMA Controller</h2>
+            <p>The Intel 8257 is a 4-channel, programmable DMA controller IC designed to automate high-speed data transfers for microprocessors like the 8085 and 8086.</p>
+            
+            <h3>1. Pin Configuration and Channels</h3>
+            <p><strong>4 Independent Channels:</strong> Designated as CH0, CH1, CH2, and CH3.</p>
+            <h3>2.Internal Register Matrix</h3>
+            <p><strong>Each individual channel contains two 16-bit registers that must be initialized before operation</strong></p>
+            <li>DMA Address Register</li>
+            <li>Terminal Count (TC) Register</li>
+            <h3>3. Modes of Priority Operation</h3>
+            <p><strong>When multiple channels request service at the same time, the 8257 resolves them using one of two modes:</strong></p>
+            <li>Fixed Priority Mode</li>
+            <li>Rotating Priority Mode</li>
+            <h3></h3>
+        </section>
+    </main>
+</strong>
+</body>
+</html>
