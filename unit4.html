@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intel 8085 Microprocessor Functional Block Diagram & Architecture</title>
+    <style>
+        img{
+                max-width: 100%;
+                height: auto;
+            }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f5f7fa;
+            color: #2c3e50;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            font-size: 28px;
+        }
+        h2 {
+            color: #2980b9;
+            font-size: 20px;
+            margin-top: 30px;
+            border-bottom: 1px solid #d6dbdf;
+            padding-bottom: 5px;
+        }
+        p {
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+        .diagram-container {
+            background-color: #1e272e;
+            color: #00d2d3;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            white-space: pre;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            margin: 20px 0;
+            font-size: 13px;
+            line-height: 1.2;
+        }
+        .group-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        @media(min-width: 768px) {
+            .group-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .group-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 15px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            border-top: 4px solid #3498db;
+        }
+        .group-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .unit-list {
+            padding-left: 20px;
+            margin: 0;
+        }
+        .unit-list li {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .unit-list strong {
+            color: #2980b9;
+        }
+        .pin-spec {
+            font-family: monospace;
+            background-color: #eaeded;
+            padding: 2px 5px;
+            border-radius: 3px;
+            color: #e67e22;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h1>MICROCONTROLLER VS MICROPROCESSOR</h1>
+   
+<strong>  Microprocessor (MPU):</strong><p> A standalone CPU on a single chip. It contains no onboard memory or peripherals. You must connect external RAM, ROM, and I/O ports to make a functional system.</p>
+<strong>Microcontroller (MCU):</strong><p> An entire computer-on-a-chip. It integrates the CPU, RAM, ROM, timers, and I/O pins all onto a single piece of silicon.</p>
+
+Feature	Microprocessor	Microcontroller
+Main Component	CPU only	CPU + RAM + ROM + Peripherals
+Board Space	Large (requires extra chips)	Compact (single-chip solution)
+Power Consumption	High	Very Low
+Processing Speed	Very Fast (GHz range)	Slower (MHz range)
+Core Application	Laptops, Desktops, Servers	Embedded systems, IoT, Appliances
+System Cost	High	Low
