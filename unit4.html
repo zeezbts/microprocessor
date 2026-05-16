@@ -100,10 +100,412 @@
 <strong>  Microprocessor (MPU):</strong><p> A standalone CPU on a single chip. It contains no onboard memory or peripherals. You must connect external RAM, ROM, and I/O ports to make a functional system.</p>
 <strong>Microcontroller (MCU):</strong><p> An entire computer-on-a-chip. It integrates the CPU, RAM, ROM, timers, and I/O pins all onto a single piece of silicon.</p>
 
-Feature	Microprocessor	Microcontroller
-Main Component	CPU only	CPU + RAM + ROM + Peripherals
-Board Space	Large (requires extra chips)	Compact (single-chip solution)
-Power Consumption	High	Very Low
-Processing Speed	Very Fast (GHz range)	Slower (MHz range)
-Core Application	Laptops, Desktops, Servers	Embedded systems, IoT, Appliances
-System Cost	High	Low
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: left; font-family: Arial, sans-serif;">
+  <thead>
+    <tr style="background-color: #f2f2f2;">
+      <th style="padding: 10px; border: 1px solid #dddddd;">Feature</th>
+      <th style="padding: 10px; border: 1px solid #dddddd;">Microprocessor</th>
+      <th style="padding: 10px; border: 1px solid #dddddd;">Microcontroller</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding: 10px; border: 1px solid #dddddd; font-weight: bold;">Main Component</td>
+      <td style="padding: 10px; border: 1px solid #dddddd;">CPU only</td>
+      <td style="padding: 10px; border: 1px solid #dddddd;">CPU + RAM + ROM + Peripherals</td>
+    </tr>
+    <tr>
+      <td style="padding: 10px; border: 1px solid #dddddd; font-weight: bold;">Board Space</td>
+      <td style="padding: 10px; border: 1px solid #dddddd;">Large (requires extra chips)</td>
+      <td style="padding: 10px; border: 1px solid #dddddd;">Compact (single-chip solution)</td>
+    </tr>
+    <tr>
+      <td style="padding: 10px; border: 1px solid #dddddd; font-weight: bold;">Power Consumption</td>
+      <td style="padding: 10px; border: 1px solid #dddddd;">High</td>
+      <td style="padding: 10px; border: 1px solid #dddddd;">Very Low</td>
+    </tr>
+    <tr>
+      <td style="padding: 10px; border: 1px solid #dddddd; font-weight: bold;">Processing Speed</td>
+      <td style="padding: 10px; border: 1px solid #dddddd;">Very Fast (GHz range)</td>
+      <td style="padding: 10px; border: 1px solid #dddddd;">Slower (MHz range)</td>
+    </tr>
+    <tr>
+      <td style="padding: 10px; border: 1px solid #dddddd; font-weight: bold;">Core Application</td>
+      <td style="padding: 10px; border: 1px solid #dddddd;">Laptops, Desktops, Servers</td>
+      <td style="padding: 10px; border: 1px solid #dddddd;">Embedded systems, IoT, Appliances</td>
+    </tr>
+    <tr>
+      <td style="padding: 10px; border: 1px solid #dddddd; font-weight: bold;">System Cost</td>
+      <td style="padding: 10px; border: 1px solid #dddddd;">High</td>
+      <td style="padding: 10px; border: 1px solid #dddddd;">Low</td>
+    </tr>
+  </tbody>
+</table>
+<hr>
+<hr>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8051 Microcontroller Pin Configuration</title>
+    <style>
+        
+        :root {
+            --bg-color: #f4f7f6;
+            --text-color: #333333;
+            --primary-color: #0056b3;
+            --table-border: #cccccc;
+            --row-even: #f9f9f9;
+            --row-hover: #f1f1f1;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        p {
+            font-size: 1.1em;
+            margin-bottom: 25px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid var(--table-border);
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--row-even);
+        }
+
+        tr:hover {
+            background-color: var(--row-hover);
+        }
+
+        .overline {
+            text-decoration: overline;
+        }
+
+        .bold-pin {
+            font-weight: bold;
+             img{
+                max-width: 100%;
+                height: auto;
+            }
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f5f7fa;
+            color: #2c3e50;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            font-size: 28px;
+        }
+        h2 {
+            color: #2980b9;
+            font-size: 20px;
+            margin-top: 30px;
+            border-bottom: 1px solid #d6dbdf;
+            padding-bottom: 5px;
+        }
+        p {
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+        .diagram-container {
+            background-color: #1e272e;
+            color: #00d2d3;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            white-space: pre;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            margin: 20px 0;
+            font-size: 13px;
+            line-height: 1.2;
+        }
+        .group-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        @media(min-width: 768px) {
+            .group-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .group-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 15px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            border-top: 4px solid #3498db;
+        }
+        .group-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .unit-list {
+            padding-left: 20px;
+            margin: 0;
+        }
+        .unit-list li {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .unit-list strong {
+            color: #2980b9;
+        }
+        .pin-spec {
+            font-family: monospace;
+            background-color: #eaeded;
+            padding: 2px 5px;
+            border-radius: 3px;
+            color: #e67e22;
+            font-weight: bold;
+        }
+        
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>8051 Microcontroller Pin Configuration</h1>
+    <p>The 8051 microcontroller is packaged in a 40-pin Dual In-line Package (DIP) where 32 pins are dedicated to four 8-bit I/O ports, and the remaining 8 pins serve power, reset, clock, and memory control functions.</p>
+ <img src="pin-diagram-mc controller.jpg" alt="">
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Pin Number</th>
+                    <th>Pin Name</th>
+                    <th>Primary Function</th>
+                    <th>Alternate/Special Function</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="bold-pin">1 – 8</td>
+                    <td>P1.0 – P1.7</td>
+                    <td>Port 1 (8-bit I/O)</td>
+                    <td>General purpose I/O (T2/T2EX in newer variants)</td>
+                </tr>
+                <tr>
+                    <td class="bold-pin">9</td>
+                    <td>RST</td>
+                    <td>Reset Input</td>
+                    <td>Active-HIGH system reset (minimum 2 machine cycles)</td>
+                </tr>
+                <tr>
+                    <td class="bold-pin">10</td>
+                    <td>P3.0</td>
+                    <td>Port 3.0</td>
+                    <td>RXD (Serial Asynchronous Input)</td>
+                </tr>
+                <tr>
+                    <td class="bold-pin">11</td>
+                    <td>P3.1</td>
+                    <td>Port 3.1</td>
+                    <td>TXD (Serial Asynchronous Output)</td>
+                </tr>
+                <tr>
+                    <td class="bold-pin">12</td>
+                    <td>P3.2</td>
+                    <td>Port 3.2</td>
+                    <td><span class="overline">INT0</span> (External Hardware Interrupt 0)</td>
+                </tr>
+                <tr>
+                    <td class="bold-pin">13</td>
+                    <td>P3.3</td>
+                    <td>Port 3.3</td>
+                    <td><span class="overline">INT1</span> (External Hardware Interrupt 1)</td>
+                </tr>
+                <tr>
+                    <td class="bold-pin">14</td>
+                    <td>P3.4</td>
+                    <td>Port 3.4</td>
+                    <td>T0 (Timer 0 External Clock Input)</td>
+                </tr>
+                <tr>
+                    <td class="bold-pin">15</td>
+                    <td>P3.5</td>
+                    <td>Port 3.5</td>
+                    <td>T1 (Timer 1 External Clock Input)</td>
+                </tr>
+                <tr>
+                    <td class="bold-pin">16</td>
+                    <td>P3.6</td>
+                    <td>Port 3.6</td>
+                    <td><span class="overline">WR</span> (External Data Memory Write Signal)</td>
+                </tr>
+                <tr>
+                    <td class="bold-pin">17</td>
+                    <td>P3.7</td>
+                    <td>Port 3.7</td>
+                    <td><span class="overline">RD</span> (External Data Memory Read Signal)</td>
+                </tr>
+                <tr>
+                    <td class="bold-pin">18</td>
+                    <td>XTAL2</td>
+                    <td>Crystal 2</td>
+                    <td>Output from the inverting oscillator amplifier</td>
+                </tr>
+                <tr>
+                    <td class="bold-pin">19</td>
+                    <td>XTAL1</td>
+                    <td>Crystal 1</td>
+                    <td>Input to the inverting oscillator amplifier</td>
+                </tr>
+                <tr>
+                    <td class="bold-pin">20</td>
+                    <td>GND</td>
+                    <td>Ground</td>
+                    <td>0V Reference level</td>
+                </tr>
+                <tr>
+                    <td class="bold-pin">21 – 28</td>
+                    <td>P2.0 – P2.7</td>
+                    <td>Port 2 (8-bit I/O)</td>
+                    <td>A8 – A15 (Higher-order Address Bus)</td>
+                </tr>
+                <tr>
+                    <td class="bold-pin">29</td>
+                    <td><span class="overline">PSEN</span></td>
+                    <td>Program Store Enable</td>
+                    <td>Active-LOW read strobe for external program memory</td>
+                </tr>
+                <tr>
+                    <td class="bold-pin">30</td>
+                    <td>ALE / <span class="overline">PROG</span></td>
+                    <td>Address Latch Enable</td>
+                    <td>De-multiplexes AD0–AD7 / Programming pulse input</td>
+                </tr>
+                <tr>
+                    <td class="bold-pin">31</td>
+                    <td><span class="overline">EA</span> / V<sub>PP</sub></td>
+                    <td>External Access</td>
+                    <td>Selects Internal/External ROM / Programming voltage</td>
+                </tr>
+                <tr>
+                    <td class="bold-pin">32 – 39</td>
+                    <td>P0.0 – P0.7</td>
+                    <td>Port 0 (8-bit I/O)</td>
+                    <td>AD0 – AD7 (Multiplexed Address/Data Bus)</td>
+                </tr>
+                <tr>
+                    <td class="bold-pin">40</td>
+                    <td>VCC</td>
+                    <td>Power Supply</td>
+                    <td>+5V Main operating voltage</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
+<hr>
+<hr>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8051 Microcontroller Architecture</title>
+</head>
+<body>
+
+    <h1>8051 Microcontroller Architecture</h1>
+    
+    <p>The <strong>8051 microcontroller</strong> features an 8-bit <strong>Harvard architecture</strong>. It was developed by <strong>Intel Corporation</strong>. This design integrates essential processing modules onto a single chip. It includes <strong>4 KB program memory (ROM)</strong>. It holds <strong>128 bytes data memory (RAM)</strong>. It features <strong>two 16-bit timers/counters</strong>. It has <strong>four 8-bit parallel I/O ports</strong>.</p>
+<img src="microcontroller.png" alt="">
+    <h2>Central Processing Unit (CPU) &amp; Core Registers</h2>
+    <p>The CPU acts as the primary hardware processing core.</p>
+    <ul>
+        <li><strong>Accumulator (Register A):</strong> Holds data for ALU arithmetic computations.</li>
+        <li><strong>B Register:</strong> Executes multiplication and division math operations.</li>
+        <li><strong>Program Status Word (PSW):</strong> Stores crucial arithmetic system flag states.</li>
+        <li><strong>Program Counter (PC):</strong> Houses the 16-bit next instruction address.</li>
+        <li><strong>Data Pointer (DPTR):</strong> Manages 16-bit external data memory mapping.</li>
+        <li><strong>Stack Pointer (SP):</strong> Points to temporary data storage stacks.</li>
+    </ul>
+
+    <h2>Memory Organization</h2>
+    <p>The 8051 utilizes a modified memory architecture with split buses.</p>
+    <ul>
+        <li><strong>Internal ROM:</strong> Stores 4 KB of system program code.</li>
+        <li><strong>External ROM:</strong> Expands program memory up to 64 KB.</li>
+        <li><strong>Internal RAM:</strong> Features 128 bytes for temporary tracking.</li>
+        <li><strong>Register Banks:</strong> Provides four banks with eight registers each.</li>
+        <li><strong>Bit-Addressable RAM:</strong> Allocates 16 bytes for individual bit manipulation.</li>
+        <li><strong>Scratchpad RAM:</strong> Stores general-purpose variables during execution loops.</li>
+        <li><strong>External RAM:</strong> Supports 64 KB data storage space extensions.</li>
+    </ul>
+
+    <h2>Integrated Peripherals &amp; Buses</h2>
+    <p>On-chip embedded modules manage external circuitry connections.</p>
+    <ul>
+        <li><strong>I/O Ports:</strong> Contains four bidirectional 8-bit hardware channels.</li>
+        <li><strong>Port 0 and 2:</strong> Handles multiplexed external memory address mapping.</li>
+        <li><strong>Port 3:</strong> Performs alternative pin functions like hardware interrupts.</li>
+        <li><strong>Timers and Counters:</strong> Employs two 16-bit delay calculation blocks.</li>
+        <li><strong>Serial Port (UART):</strong> Manages full-duplex asynchronous data transmission pipelines.</li>
+        <li><strong>Interrupt Controller:</strong> Services five prioritized hardware vector interrupts.</li>
+        <li><strong>Oscillator Circuit:</strong> Requires crystal components for system clock sync.</li>
+        <li><strong>System Bus:</strong> Interconnects modules via 8-bit data lines.</li>
+    </ul>
+
+</body>
+</html>

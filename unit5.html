@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8051 Microcontroller Timer &amp; Counter Operating Modes</title>
+    <style>
+     img{
+                max-width: 100%;
+                height: auto;
+            }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f5f7fa;
+            color: #2c3e50;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            font-size: 28px;
+        }
+        h2 {
+            color: #2980b9;
+            font-size: 20px;
+            margin-top: 30px;
+            border-bottom: 1px solid #d6dbdf;
+            padding-bottom: 5px;
+        }
+        p {
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+        .diagram-container {
+            background-color: #1e272e;
+            color: #00d2d3;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            white-space: pre;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            margin: 20px 0;
+            font-size: 13px;
+            line-height: 1.2;
+        }
+        .group-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        @media(min-width: 768px) {
+            .group-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .group-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 15px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            border-top: 4px solid #3498db;
+        }
+        .group-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .unit-list {
+            padding-left: 20px;
+            margin: 0;
+        }
+        .unit-list li {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .unit-list strong {
+            color: #2980b9;
+        }
+        .pin-spec {
+            font-family: monospace;
+            background-color: #eaeded;
+            padding: 2px 5px;
+            border-radius: 3px;
+            color: #e67e22;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>8051 Timer &amp; Counter Operating Modes</h1>
+    
+    <p>The 8051 microcontroller features two internal timers, Timer 0 and Timer 1. The <strong>TMOD (Timer Mode) register</strong> configures their behavior using two specific bits: <strong>M1 and M0</strong>.</p>
+
+    <h2>Mode 0: 13-Bit Timer/Counter (M1=0, M0=0)</h2>
+    <p>This mode acts as a legacy configuration for older systems.</p>
+    <ul>
+        <li>Uses 5 bits of the TL register.</li>
+        <li>Uses 8 bits of the TH register.</li>
+        <li>Counts up to a maximum of 8,191.</li>
+        <li>Triggers an overflow flag at maximum count.</li>
+        <li>Maintains backward compatibility with the 8048 chip.</li>
+    </ul>
+
+    <h2>Mode 1: 16-Bit Timer/Counter (M1=0, M0=1)</h2>
+    <p>This is the most common configuration for generating custom time delays.</p>
+    <ul>
+        <li>Utilizes full 16-bit capacity.</li>
+        <li>Combines both TL and TH registers.</li>
+        <li>Counts up to a maximum of 65,535.</li>
+        <li>Requires manual register reloading after overflow.</li>
+        <li>Generates long, precise time delay intervals.</li>
+    </ul>
+
+    <h2>Mode 2: 8-Bit Auto-Reload (M1=1, M0=0)</h2>
+    <p>This mode automatically resets itself, making it highly efficient for continuous loops.</p>
+    <ul>
+        <li>Functions strictly as an 8-bit counter.</li>
+        <li>Holds the active count inside TL.</li>
+        <li>Stores the reset value inside TH.</li>
+        <li>Overflow copies TH back into TL automatically.</li>
+        <li>Eliminates software reloading overhead entirely.</li>
+        <li>Serves as the primary baud-rate generator.</li>
+    </ul>
+
+    <h2>Mode 3: Split Timer Mode (M1=1, M0=1)</h2>
+    <p>This configuration splits the hardware to gain an extra timer.</p>
+    <ul>
+        <li>Affects Timer 0 only.</li>
+        <li>Divides Timer 0 into two 8-bit blocks.</li>
+        <li>Turns TL0 into a standard 8-bit timer.</li>
+        <li>Turns TH0 into a second 8-bit timer.</li>
+        <li>Commandeers Timer 1 control bits for TH0.</li>
+        <li>Restricts Timer 1 to background baud-rate tasks.</li>
+    </ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>8051 Microcontroller Interrupts</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 20px auto; padding: 0 20px; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; }
+        h2 { color: #34495e; margin-top: 20px; }
+        h3 { color: #2980b9; margin-bottom: 5px; }
+        ul { margin-top: 5px; padding-left: 20px; }
+        li { margin-bottom: 5px; }
+        strong { color: #333; }
+    </style>
+</head>
+<body>
+
+    <h1>8051 Microcontroller Interrupts</h1>
+    <p>The 8051 microcontroller contains <strong>five standard interrupt sources</strong>.</p>
+
+    <h2>The Five 8051 Interrupts</h2>
+
+    <h3>External Interrupt 0 (INT0)</h3>
+    <ul>
+        <li>Pin P3.2 receives the signal.</li>
+        <li>Vector address is 0003H.</li>
+        <li>Highest default hardware priority.</li>
+        <li>Detects low levels or falling edges.</li>
+    </ul>
+
+    <h3>Timer 0 Interrupt (TF0)</h3>
+    <ul>
+        <li>Triggered by Timer 0 overflow.</li>
+        <li>Vector address is 000BH.</li>
+        <li>Second highest hardware priority.</li>
+        <li>Clears TF0 flag automatically.</li>
+    </ul>
+
+    <h3>External Interrupt 1 (INT1)</h3>
+    <ul>
+        <li>Pin P3.3 receives the signal.</li>
+        <li>Vector address is 0013H.</li>
+        <li>Third highest hardware priority.</li>
+        <li>Detects low levels or falling edges.</li>
+    </ul>
+
+    <h3>Timer 1 Interrupt (TF1)</h3>
+    <ul>
+        <li>Triggered by Timer 1 overflow.</li>
+        <li>Vector address is 001BH.</li>
+        <li>Fourth highest hardware priority.</li>
+        <li>Clears TF1 flag automatically.</li>
+    </ul>
+
+    <h3>Serial Port Interrupt (RI/TI)</h3>
+    <ul>
+        <li>Triggered by data transmission or reception.</li>
+        <li>Vector address is 0023H.</li>
+        <li>Lowest default hardware priority.</li>
+        <li>Requires manual software flag clearance.</li>
+    </ul>
+
+    <h2>Important Configuration Registers</h2>
+    <ul>
+        <li><strong>IE (Interrupt Enable):</strong> Activates or deactivates individual interrupts.</li>
+        <li><strong>IP (Interrupt Priority):</strong> Changes default priority levels.</li>
+        <li><strong>TCON (Timer Control):</strong> Selects edge or level triggering.</li>
+    </ul>
+
+</body>
+</html>
+<hr>
+<hr>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>8051 Interrupt Control Registers</title>
+</head>
+<body>
+
+    <h1>8051 Microcontroller Interrupt Control Registers</h1>
+    
+    <h2>IE: Interrupt Enable Register (Address: A8H)</h2>
+    <p>Manages individual interrupt activation.</p>
+    <ul>
+        <li><span class="bit">Bit 7</span> <span class="name">EA</span> <span class="desc">Global interrupt enable bit.</span></li>
+        <li><span class="bit">Bit 6</span> <span class="name">-</span> <span class="desc">Reserved for future use.</span></li>
+        <li><span class="bit">Bit 5</span> <span class="name">ET2</span> <span class="desc">Timer 2 enable bit.</span></li>
+        <li><span class="bit">Bit 4</span> <span class="name">ES</span> <span class="desc">Serial port enable bit.</span></li>
+        <li><span class="bit">Bit 3</span> <span class="name">ET1</span> <span class="desc">Timer 1 enable bit.</span></li>
+        <li><span class="bit">Bit 2</span> <span class="name">EX1</span> <span class="desc">External interrupt 1 enable bit.</span></li>
+        <li><span class="bit">Bit 1</span> <span class="name">ET0</span> <span class="desc">Timer 0 enable bit.</span></li>
+        <li><span class="bit">Bit 0</span> <span class="name">EX0</span> <span class="desc">External interrupt 0 enable bit.</span></li>
+    </ul>
+
+    <h2>IP: Interrupt Priority Register (Address: B8H)</h2>
+    <p>Sets priority levels for each interrupt.</p>
+    <ul>
+        <li><span class="bit">Bit 7</span> <span class="name">-</span> <span class="desc">Reserved for future use.</span></li>
+        <li><span class="bit">Bit 6</span> <span class="name">-</span> <span class="desc">Reserved for future use.</span></li>
+        <li><span class="bit">Bit 5</span> <span class="name">PT2</span> <span class="desc">Timer 2 priority bit.</span></li>
+        <li><span class="bit">Bit 4</span> <span class="name">PS</span> <span class="desc">Serial port priority bit.</span></li>
+        <li><span class="bit">Bit 3</span> <span class="name">PT1</span> <span class="desc">Timer 1 priority bit.</span></li>
+        <li><span class="bit">Bit 2</span> <span class="name">PX1</span> <span class="desc">External interrupt 1 priority bit.</span></li>
+        <li><span class="bit">Bit 1</span> <span class="name">PT0</span> <span class="desc">Timer 0 priority bit.</span></li>
+        <li><span class="bit">Bit 0</span> <span class="name">PX0</span> <span class="desc">External interrupt 0 priority bit.</span></li>
+    </ul>
+
+    <h2>TCON: Timer Control Register (Address: 88H)</h2>
+    <p>Configures external interrupt triggering flags.</p>
+    <ul>
+        <li><span class="bit">Bit 3</span> <span class="name">IE1</span> <span class="desc">External 1 edge flag bit.</span></li>
+        <li><span class="bit">Bit 2</span> <span class="name">IT1</span> <span class="desc">External 1 trigger select bit.</span></li>
+        <li><span class="bit">Bit 1</span> <span class="name">IE0</span> <span class="desc">External 0 edge flag bit.</span></li>
+        <li><span class="bit">Bit 0</span> <span class="name">IT0</span> <span class="desc">External 0 trigger select bit.</span></li>
+    </ul>
+
+    <h2>SCON: Serial Control Register (Address: 98H)</h2>
+    <p>Contains hardware serial interrupt flags.</p>
+    <ul>
+        <li><span class="bit">Bit 1</span> <span class="name">TI</span> <span class="desc">Transmit interrupt flag bit.</span></li>
+        <li><span class="bit">Bit 0</span> <span class="name">RI</span> <span class="desc">Receive interrupt flag bit.</span></li>
+    </ul>
+
+</body>
+</html>
+<hr>
+<hr><body>
+
+    <h1>8051 Microcontroller Timers and Counters</h1>
+    <p>The 8051 microcontroller contains two 16-bit hardware blocks: <strong>Timer 0</strong> and <strong>Timer 1</strong>.</p>
+
+    <h2>Primary Functions</h2>
+    <ul>
+        <li><span class="feature">Timer Mode</span> <span class="desc">Generates accurate internal time delays.</span></li>
+        <li><span class="feature">Counter Mode</span> <span class="desc">Counts external electronic pulses or events.</span></li>
+    </ul>
+
+    <h3>Register Structure</h3>
+    <ul>
+        <li><span class="label">Timer 0</span> <span class="desc">Split into TH0 (High Byte) and TL0 (Low Byte).</span></li>
+        <li><span class="label">Timer 1</span> <span class="desc">Split into TH1 (High Byte) and TL1 (Low Byte).</span></li>
+        <li><span class="label">Range</span> <span class="desc">Each register pair counts from 0000H to FFFFH.</span></li>
+    </ul>
+
+    <h3>Associated Hardware Pins</h3>
+    <ul>
+        <li><span class="label">P3.4 (T0)</span> <span class="desc">External clock input for Timer 0.</span></li>
+        <li><span class="label">P3.5 (T1)</span> <span class="desc">External clock input for Timer 1.</span></li>
+    </ul>
+
+    <h3>Control Registers</h3>
+    <ul>
+        <li><span class="label">TMOD</span> <span class="desc">Timer Mode Register. Sets the mode of operation (Modes 0-3).</span></li>
+        <li><span class="label">TCON</span> <span class="desc">Timer Control Register. Starts, stops, and monitors overflows.</span></li>
+    </ul>
+
+    <h2>How They Work</h2>
+    
+    <h3>Timer Operation</h3>
+    <ul>
+        <li>The system clock drives the internal register.</li>
+        <li>The register increments once every machine cycle.</li>
+        <li>One machine cycle equals 12 crystal oscillator pulses.</li>
+    </ul>
+
+    <h3>Counter Operation</h3>
+    <ul>
+        <li>An external pin drives the internal register.</li>
+        <li>The register increments when a falling edge occurs.</li>
+        <li>The microcontroller samples the external pin every cycle.</li>
+    </ul>
+
+</body>
+</body>
+</html>
