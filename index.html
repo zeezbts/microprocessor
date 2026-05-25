@@ -3,166 +3,497 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EDUCATION WITH ZEE</title>
+    <title>Education With Zee | Alagappa University Learning Hub</title>
+    <!-- Premium Fonts & Icons -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cloudflare.com">
+    
     <style>
-      img {
-  
-  max-width: 100%;
-  height: auto; 
-  object-fit: cover; 
-  display: block; 
-  image-rendering: -webkit-optimize-contrast;
+        /* Design Tokens (CSS Variables) */
+        :root {
+            --bg-body: #f8fafc;
+            --bg-surface: #ffffff;
+            --bg-navbar: rgba(15, 23, 42, 0.95);
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --text-inverse: #f8fafc;
+            --brand-primary: #3b82f6;
+            --brand-hover: #1d4ed8;
+            --brand-light: #eff6ff;
+            --border-color: #e2e8f0;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -2px rgba(0,0,0,0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.05);
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Core Reset & Base Styles */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Pro Sticky Navbar with Glassmorphism */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--bg-navbar);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 0 2rem;
+            height: 72px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-inverse);
+            font-weight: 700;
+            font-size: 1.25rem;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-brand i {
+            color: var(--brand-primary);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            height: 100%;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            position: relative;
+        }
+
+        .nav-link, .dropbtn {
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #94a3b8;
+            text-decoration: none;
+            padding: 0 1.25rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            height: 100%;
+            transition: var(--transition-smooth);
+        }
+
+        .nav-link:hover, .dropdown:hover .dropbtn, .nav-item.active .nav-link {
+            color: var(--text-inverse);
+        }
+
+        /* Pro Dropdowns Layout */
+        .dropdown-panel {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background-color: var(--bg-surface);
+            min-width: 240px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            padding: 0.5rem 0;
+        }
+
+        .dropdown-panel a {
+            color: var(--text-muted);
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+        }
+
+        .dropdown-panel a:hover {
+            background-color: var(--brand-light);
+            color: var(--brand-primary);
+        }
+
+        .dropdown:hover .dropdown-panel {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .dropbtn i {
+            font-size: 0.75rem;
+            transition: var(--transition-smooth);
+        }
+
+        .dropdown:hover .dropbtn i {
+            transform: rotate(180deg);
+        }
+
+        /* Responsive Mobile Architecture Menu Toggle */
+        #menu-toggle {
+            display: none;
+        }
+
+        .menu-trigger {
+            display: none;
+            color: var(--text-inverse);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Main Structural Layout Layout */
+        .app-container {
+            max-width: 1100px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.15;
+            color: var(--text-main);
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content h1 span {
+            color: var(--brand-primary);
+            position: relative;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        /* Card Component Layout Upgrade */
+        .media-wrapper {
+            position: relative;
+            border-radius: var(--radius-lg);
+            background: var(--bg-surface);
+            padding: 1rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            transition: var(--transition-smooth);
+        }
+
+        .media-wrapper:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .pro-card {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+            display: block;
+        }
+
+        /* Course Presentation & Call to Action (CTA) */
+        .course-section {
+            background-color: var(--bg-surface);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .university-badge {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--brand-light);
+            color: var(--brand-primary);
+            padding: 0.35rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .course-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+            margin-bottom: 1.5rem;
+        }
+
+        .action-box {
+            margin-top: 1rem;
+        }
+
+        .view-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--brand-primary);
+            color: white;
+            padding: 0.85rem 2.25rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            transition: var(--transition-smooth);
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+        }
+
+        .view-btn:hover {
+            background-color: var(--brand-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+        }
+
+        .view-btn i {
+            transition: var(--transition-smooth);
+        }
+
+        .view-btn:hover i {
+            transform: translateX(4px);
+        }
+
+        /* Adaptive Mobile Breakpoints Layout */
+        @media screen and (max-width: 992px) {
+            .app-container {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+                margin: 2rem auto;
+            }
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media screen and (max-width: 768px) 
+        {
+            .menu-trigger {
+                display: block;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 72px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 72px);
+                background-color: var(--bg-navbar);
+                flex-direction: column;
+                padding: 1.5rem 0;
+                transition: var(--transition-smooth);
+                overflow-y: auto;
+            }
+
+            #menu-toggle:checked ~ .nav-menu {
+                left: 0;
+            }
+
+            .nav-item {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+height: auto;
 }
-.pro-card {
-  border-radius: 12px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+@media screen and (max-width: 768px) {
+    /* Mobile text and interactive elements alignment */
+    .nav-link, .dropbtn {
+        padding: 1rem 2rem;
+        width: 100%;
+        justify-content: space-between;
+        box-sizing: border-box;
+    }
+
+    /* Collapsed mobile panel state */
+    .dropdown-panel {
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: none;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.03);
+        box-shadow: none;
+        border: none;
+        border-radius: 0;
+        max-height: 0;
+        padding: 0;
+        display: block;
+        visibility: visible;
+        pointer-events: auto;
+        overflow: hidden; /* Added to cleanly clip child text when closed */
+        transition: max-height 0.3s ease;
+    }
+
+    /* Mobile trigger state when user activates hover/focus */
+    .dropdown:hover .dropdown-panel {
+        transform: none;
+        max-height: 500px;
+    }
+
+    /* Sub-navigation nested item typography styling */
+    .dropdown-panel a {
+        color: #94a3b8;
+        padding: 0.85rem 3rem;
+    }
+
+    .dropdown-panel a:hover {
+        background: none;
+        color: var(--text-inverse);
+    }
 }
 
-/* Hover effect used on many e-commerce sites */
-.pro-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+
+/* Container that splits your text on the left and logo on the right */
+.app-container {
+    max-width: 1100px;
+    margin: 3rem auto;
+    padding: 0 1.5rem;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr; /* Splitting the layout columns */
+    gap: 4rem;
+    align-items: center;
 }
-  .navbar {
-  overflow: hidden;
-  background-color: #333;
+
+/* The card container wrapping your logo image */
+.media-wrapper {
+    position: relative;
+    border-radius: 16px;
+    background: #ffffff;
+    padding: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.navbar a {
-  float: left;
-  font-size: 16px;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
+
+/* Responsive styles to make your logo stretch and scale beautifully */
+.pro-card {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3; /* Keeps the standard image box proportion */
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
 }
-.dropdown {
-  float: left;
-  overflow: hidden;
+
+/* On mobile viewports, stack the logo directly under the text */
+@media screen and (max-width: 992px) {
+    .app-container {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
 }
-.dropdown .dropbtn {
-  font-size: 16px;  
-  border: none;
-  outline: none;
-  color: white;
-  padding: 14px 16px;
-  background-color: inherit;
-  font-family: inherit;
-  margin: 0;
-  cursor: pointer;
-}
-.navbar a:hover, .dropdown:hover .dropbtn {
-  background-color: red;
-}
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-.dropdown-content a {
-  float: none;
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
-.dropdown-content a:hover {
-  background-color: #ddd;
-}
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-    </style>
+
+        
+</style>
 </head>
 <body>
-  <div class="navbar">
-  <a href="home.html">HOME</a>
-  <a href="contact.html">CONTACT</a>
-  <a href="aboutus.html">ABOUTUS</a>
- 
-    <div class="dropdown">
-    <button class="dropbtn">UNITS
-      <i class="fa fa-caret-down"></i>
-    </button>
-    <div class="dropdown-content">
-      <a href="unit1.html">UNIT 1</a>
-      <a href="unit2.html">UNIT 2</a>
-      <a href="unit3.html">UNIT 3</a>
-      <a href="unit4.html">UNIT 4</a>
-      <a href="unit5.html">UNIT 5</a>
-      
-  </div> 
-</div>
-<div class="dropdown">
-    <button class="dropbtn">OTHER PAGES
-    <i class="fa fa-caret-down"></i>
-    </button>
-    <div class="dropdown-content">
-       <a href="https://edu-seven-bay.vercel.app/">C++ PAGE</a>
-  <a href="https://csem1zeez.vercel.app/">C PAGE</a>
-  <A href="https://htmlsem2zeez.vercel.app/">HTML PAGE</A>
-  <a href="https://digitalsem1zeez.vercel.app/">DIGITAL PAGE</a>
-  </div> 
-</div>
-  </div>
-<br>
-<h1><I>WELCOME TO ZEEZ</I></h1>
-<img class="pro-card" src="zeez143.png" alt="unknow">
-<br><br>
-<style>
-  /* Button container and general styling */
-  .button-box {
-    margin: 20px 0;
-    font-family: 'Segoe UI', Arial, sans-serif;
-  }
+  
+<nav class="navbar">
+    
+    <!-- Hidden Controller Checkbox for Hamburger Action -->
+    <input type="checkbox" id="menu-toggle">
+    <label for="menu-toggle" class="menu-trigger">
+        <i class="fa-solid fa-bars"></i>
+    </label>
 
-  /* Professional Button Design */
-  .view-btn {
-    display: inline-block;
-    background-color: #007bff; /* Primary Blue */
-    color: white;
-    padding: 12px 30px;
-    font-size: 16px;
-    font-weight: 600;
-    text-decoration: none; /* Removes underline from <a> */
-    border-radius: 5px;
-    border: none;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
+    <!-- Header Menu Nodes -->
+    <ul class="nav-menu">
+        <li class="nav-item active"><a href="home.html" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+        <li class="nav-item"><a href="aboutus.html" class="nav-link">About Us</a></li>
+       
+        <!-- Course Units Accordion Item -->
+        <li class="nav-item dropdown">
+            <button class="dropbtn" aria-haspopup="true">Units <i class="fa-solid fa-chevron-down"></i></button>
+            <div class="dropdown-panel">
+                <a href="unit1.html">Unit 1 <i class="fa-solid fa-angle-right"></i></a>
+                <a href="unit2.html">Unit 2 <i class="fa-solid fa-angle-right"></i></a>
+                <a href="unit3.html">Unit 3 <i class="fa-solid fa-angle-right"></i></a>
+                <a href="unit4.html">Unit 4 <i class="fa-solid fa-angle-right"></i></a>
+                <a href="unit5.html">Unit 5 <i class="fa-solid fa-angle-right"></i></a>
+            </div> 
+        </li>
 
-  /* Hover and Active effects */
-  .view-btn:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  }
+        <!-- External Verifications / Other Portals -->
+        <li class="nav-item dropdown">
+            <button class="dropbtn" aria-haspopup="true">Other Networks <i class="fa-solid fa-chevron-down"></i></button>
+            <div class="dropdown-panel">
+                <a href="https://digitalsem1zeez.vercel.app/">DIGITAL PAGE</a>
+                <a href="https://htmlsem2zeez.vercel.app/">HTML PAGE</a>
+                <A href="https://edu-seven-bay.vercel.app/">C++ PAGE</A>
+                <a href="https://csem1zeez.vercel.app/">C PAGE</a>
+            </div> 
+        </li>
+    </ul>
+</nav>
 
-  .view-btn:active {
-    transform: translateY(0);
-  }
 
-  /* Heading styling */
-  .university-title {
-    color: #2c3e50;
-    border-left: 5px solid #007bff;
-    padding-left: 15px;
-    text-transform: uppercase;
-    font-size: 1.5rem;
-  }
-</style>
+<main class="app-container">
+    <header class="hero-content">
+        <span class="university-badge">Alagappa University Curriculum</span>
+        <h1>Welcome to <span>Zeez Portal</span></h1>
+       
+        
+        <section class="course-section">
+            <h2 class="course-title">MICROPROCESSOR</h2>
+            <div class="action-box">
+                <a href="questions.html" class="view-btn">
+                    View Examination Questions <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </section>
+    </header>
 
-<h2 class="university-title">MICROPROCESSOR Alagappa University</h2>
-
-<div class="button-box">
-  <!-- Clean approach: Using the <a> tag styled as a button -->
-  <a href="" class="view-btn">VIEW QUESTIONS</a>
-</div>
+    <!-- YOUR LOGO IS LOCATED RIGHT HERE -->
+    <aside class="media-wrapper">
+        <img class="pro-card" src="zeez143.png" alt="Zeez Educational Dashboard Media Preview" width="600" height="450" loading="lazy">
+    </aside>
+</main>
 
 </body>
 </html>
